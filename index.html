@@ -2,26 +2,32 @@
 <html>
 <head>
 	<title>Jon Clayton's Website</title>
+	<link rel="stylesheet" type="text/css" href="stylesheets/default.css">
 </head>
 
 <body>
 	<header>
-		<h1>A Blog Too Far</h1>
+		<h1>Jon Clayton's Homepage</h1>
 	</header>
 
 	<nav>
-	    <a href="html.index" > Home</a>
-	    <a href="blog/Index.html" > Blog</a>
-	    <a href="prof-info.html" > Professional Information</a>
-	    <a href="about-me.html" > About Me</a>
-	    <a href="links.html" > Links</a>
-	    <a href="contact.html" > Contact information</a>
+	    <div><a href="index.html" > Home</a></div>
+	    <div><a href="blog/Index.html" >A Blog Too Far</a></div>
+	    <div><a href="prof-info.html" > Professional Information</a></div>
+	    <div><a href="about-me.html" > About Me</a></div>
+	    <div><a href="links.html" > Links</a></div>
+	    <div><a href="contact.html" > Contact information</a></div>
 	</nav>
 
-	<img src="photo" alt="Jon's Photo">
-	<img src="photo" alt="Coding Photo">
-
-	<section>
+	<table>
+		<tr>
+			<td>
+	<section class="photos">
+		<img src="imgs/Jon-photo.JPEG" alt="Jon's Photo">
+	</section>
+</td>
+<td>
+	<div class="links">
 		<table>
 			<tr>
 				<td><a href="https://www.facebook.com/Jonathan.B.Clayton" > Facebook</a></td>
@@ -32,9 +38,15 @@
 				<td><a href="https://twitter.com/jonclaytontx" > Twitter</a></td>
 			</tr>
 		</table>
+	</div>
+		</td></tr>
+		<tr><td>
+			<section class="photos">
+		<img src="imgs/coding-image.png" alt="Coding Photo">
 	</section>
-
-	<section>
+</td>
+<td>
+	<div class="links">
 		<table>
 			<tr>
 				<td><a href="resume.html" > Resume</a></td>
@@ -45,11 +57,12 @@
 				<td><a href="contact.html" > Contact</a></td>
 			</tr>
 		</table>
-	</section>
+	</div>
+</td></tr></table>
 
 	<footer>
-		<p>Copyright 2015 by Jonathan B. Clayton</p>
-		<p>Other legal mumbo jumbo</p>
+		<p>Copyright 2015 by Jonathan B. Clayton
+		Other legal mumbo jumbo</p>
 	</footer>
 
 
