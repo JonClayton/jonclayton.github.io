@@ -1,5 +1,19 @@
 .bottom-links {
+	position: fixed;
+	bottom: 0px;
 	display: inline-block;
+}
+
+.bottom-links ul {
+	position: fixed;
+	bottom: 0px;
+	right: 0%;
+	width: 20%
+}
+
+.bottom-links li {
+	display: block;
+	width 25%;
 }
 
 .right-hand-bar {
@@ -7,4 +21,23 @@
 	display: block;
 	float: right;
 	width: 30%;
+	left: 0%;
+}
+
+.blog-header {
+	width: 70%;
+	display: inline-block;
+	text-align: center;
+	margin-bottom: 0px;
+}
+
+.blog-header li {
+	width: 15%;
+	display: inline-block;
+}
+
+.blog-text {
+	position: relative;
+	width: 80%;
+	float: left;
 }
