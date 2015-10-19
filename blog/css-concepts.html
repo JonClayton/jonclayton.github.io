@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+  <head>
+    <title>Just a Utility Player</title>
+  </head>
+
+  <body>
+    <img alt="My Logo" src="Source file for my logo">
+    <header>
+      <h1>A Blog Too Far</h1>
+      <h2>Just a Utility Player</h2>
+      <h3>19 October 2015</h3>
+        <ul>
+            <li> <a href="link to webpage home" > Home </a> </li>
+            <li> <a href="link to blog home" > View Blog </a> </li>
+            <li> <a href="link to about me" > About Me </a> </li>
+            <li> <a href="link to GitHub home" > GitHub </a> </li>
+            <li> <a href="link to site map" > Other </a> </li>
+        </ul>
+    </header>
+    <section>
+          <p>I play softball. I love playing softball. I'm pretty good at it too. I can play anywhere in the field and do a good job, even if I am more confortable in some positions than in others. This makes me a "utility player." On youth softball teams this is a euphemism for "not good enough to start," but in our softball league it's a good thing. No matter who is missing for the game, I can fill in there and we're still tough on defense. So I'm glad I can play any position.
+          <p>About now you're thinking, "What does this have to do with a technical blog?" That's if I'm lucky. If I'm unluckly, you think I've lost my mind or you've clicked away to Paris Hilton's blog. Yes, there is such a thing and if you want to spend a few minutes you'll never get back, here's the <a href="http://parishilton.com/blogs/paris-blog">link</a></p>
+          <p>But getting back to my point, and I do have one, it is a good thing for me to not really care about my position in softball. It is a bad thing indeed to not be in the right position in CSS. This week in Dev Bootcamp we spent time on CSS and positioning turned out to be a real challenge. I've read through other people's weekly reflections (they thought they were writing to their small Accountability Group but it turned out to be the whole cohort--but that's nother issue). I'm not the only one who didn't get it right away.  So to help me make sure I get it, and perhaps to help someone else (you?) understand positioning and a few other topics, I'm going to explain them here.</p>
+          <img src="image for blog">
+      </section>
+
+      <section>
+        <p>Positioning is how elements are placed on the page and/or screen when you are looking at a webpage. Without positioning, elements on the page would just follow one after another, looking much like the second generation of websites. First generation being text only, second generation having some photos as elements, but every element started from the left of the screen below the previous element.  So here's a summary of the four basic position properties:</p>
+        <ul>
+          <li>
+            Static (default): follows the flow of the page, so position is based on that of the previous element without overlapping.  If no other instructions, this means below the previous element.  No top/bottom or left/right properties allowed.
+          </li>
+          <li>
+            Relative: top/bottom and left/right properties create that much space on that side of the element from where it would have been in the Static location. So Relative without non-zero top/bottom/left/right properties will be in the same place as Static would be.
+          </li>
+          <li> 
+            Fixed: element goes in the position on the screen defined by top/bottom and left/right, and remains there regardless of scrolling. The direction properties describe the distance between the edge of the element and the edge of the screen.
+          </li>
+          <li>
+            Absolute: element goes in a position relative to the previous element, so it is like the fixed positioning, except the prior object takes the place of the screen. Note that the direction properties, if positive, are describing locations inside the edges of the previous object.</p>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <p>Now, on to a topic I did understand: Margin, Border and Padding. These all have to do with the space around an element, be it a block of text or an image or something else. Frankly, I think it is easiest to reverse the order and go outwards from the element itself.</p>
+
+        <p>Padding is the space between the edge of the contents (e.g. text) and the inside edge of the border, and is colored with the background color of the element. Zero padding makes text looks scrunched in the element if there is a visible border. The border is the width of the "edge" of the element and has its own color.  If it is zero, it is invisible. The margin is the setoff between the element and other elements. It is transparent, and if it is zero for two adjacent elements, their borders will touch, but not overlap (so the line will appear extra thick if both are visible and in the same color).</p></section>
+        <section>
+          <p>The next topic is display, and the difference between display: inline and display: block.  There are other alternatives for the display property, but these are closely related.  Inline does not allow for changes to the height or width of the element.  Inline block allows the creation of a block around the element using height and width.  In each case, the element can follow a previous element on the same horizontal line (hence the "inline" in the name). It also appears from at least one source that a series of inline elements can result in one of them being broken in two parts to wrap to the next row, while an inline block will go all in one piece to the next row if there is not space for it in the current row. Time for some experiments!
+        </p></section>
+        <section><p>
+          My last topic for the day is the use of classes and IDs. At the most basic semantic level, class is used for a package of styling that will be applied to more than one element in the page, while an ID would be used for a package that will be applied only once. Since there is no constraint in modern browsers on the number of classes, this seems like an unnecessary distinction, and so I accept the argument made by J. Ky that we should reserve ID for some other distinction that relates to the element being unique, such as elements using particular inputs or JavaScript results. However, I mnust add that I'm taking what I hear from J. Ky with a grain of salt since he was also proselytizing for the Atomic CSS framework in which every styling trait is converted into a class with a short nickname and each HTML element that requires styling is assigned to a long list of such classes. This seems like a clear violation of the semantic HTML principle where class name mean something. It also leads to lots of repetition in the HTML in order to reduce the size of the CSS file, which seems backwards, and a real problem for accessibility. 
+        </p></section>
+
+        <p>Hope you enjoyed this. I plan to come back to it to add some images when I get a chance.</p>
+
+
+      <aside>
+        <ul>
+            <li> <a href="#" > Recent Post </a> </li>
+            <li> <a href="#" > Recent Post 2 </a> </li>
+            <li> <a href="#" > Archive</a> </li>
+        </ul>
+      </aside>
+    <footer>
+      <ul>
+        <li> <a href="comments for blog link" > Comments</a>
+        <li> <a href="share on Facebook link" > Share on Facebook</a>
+        <li> <a href="comments for blog link" > Share on Twitter</a>         
+      </ul>
+    </footer>
+  </body>
