@@ -1,8 +1,10 @@
-* {
-	background-color: red;
-}
-
 .bottom-links {
 	display: inline-block;
 }
 
+.right-hand-bar {
+	position: relative;
+	display: block;
+	float: right;
+	width: 30%;
+}
