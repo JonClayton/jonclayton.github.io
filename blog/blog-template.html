@@ -14,17 +14,18 @@ What new semantic elements did you learn about (if any) ?
 
 <!DOCTYPE html>
   <head>
-    <title> Blog Post Template </title>
-    <link rel="stylesheet" type="text/css" href="stylesheets/default.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/blog.css">
-  </head>
+    <title>Title matching below</title>  
+    <link rel="stylesheet" type="text/css" href="../stylesheets/default.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/blog.css">
+
 
   <body>
-    <img src="Source file for my logo">
-    <header>
-      <h1> A Blog Too Far </h1>
-      <h2> Blog Post Title </h2>
-      <h3> Blog Post Date </h3>
+    <img alt="My Logo" src="../imgs/Jon-photo.jpeg">
+    <header class="blog-header">
+      <div class="blog-header">
+      <h1>A Blog Too Far</h1>
+      <h2>Title</h2>
+      <h3>Date in dd Month yyyy formate</h3>
         <ul>
             <li> <a href="link to webpage home" > Home </a> </li>
             <li> <a href="link to blog home" > View Blog </a> </li>
@@ -32,28 +33,31 @@ What new semantic elements did you learn about (if any) ?
             <li> <a href="link to GitHub home" > GitHub </a> </li>
             <li> <a href="link to site map" > Other </a> </li>
         </ul>
-    </header>
-    <section>
-      <div>
-          <p> Lots of text and paragraphs for blog entry </p>
-          <p> Lots of text and paragraphs for blog entry </p>
-          <p> Lots of text and paragraphs for blog entry </p>
-          <p> Lots of text and paragraphs for blog entry </p>
-          <img src="image for blog">
       </div>
-      <div>
+    </header>
+    <section class="blog-text">
+          <p>
+          </p>
+          <img src="image for blog">
+      </section>
+
+      <section class="blog-text">
+        <p>
+        </p>
+      </section>
+  
+      <aside class="side-links">
         <ul>
             <li> <a href="#" > Recent Post </a> </li>
             <li> <a href="#" > Recent Post 2 </a> </li>
             <li> <a href="#" > Archive</a> </li>
         </ul>
-      </div>
-    </section>
-    <footer>
+      </aside>
+    <aside class="bottom-links">
       <ul>
         <li> <a href="comments for blog link" > Comments</a>
         <li> <a href="share on Facebook link" > Share on Facebook</a>
         <li> <a href="comments for blog link" > Share on Twitter</a>         
       </ul>
-    </footer>
+    </aside>
   </body>
