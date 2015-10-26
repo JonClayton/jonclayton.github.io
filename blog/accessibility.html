@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mi Hash es Su Array</title>  
+    <title>We all have accessibility problems</title>  
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../stylesheets/default.css">
     <link rel="stylesheet" type="text/css" href="../stylesheets/blog.css">
@@ -12,7 +12,7 @@
     <header class="blog-header">
       <div class="blog-header">
       <h1>A Blog Too Far</h1>
-      <h2>Mi Hash es Su Array</h2>
+      <h2>We all have accessibility problems</h2>
       <h3>25 October 2015</h3>
         <ul>
             <li> <a href="link to webpage home" > Home </a> </li>
@@ -24,20 +24,14 @@
       </div>
     </header>
     <section class="blog-text">
-          <p>Allow me to be provocative for a moment. Arrays and Hashes are entirely different classes of objects in Ruby. In a formal sense they are as different from each other as Exception and TrueClass are different from them and each oher, since all four are classes and first generation offspring of the overall Object class. Now I'm sure we can all agree those other two classes are weird and different (at this point DBC students shouldn't even have heard of them, much less be able to define them!). But if Array and Hashes are different classes of object, you'd think they'd be more different than they are. In fact, I'd argue they are entirely the same except for differences in two areas, both of which are relatively unimportant.
-          </p>
-          <p>First, let's cover the basics. An array is easy to understand. It is an ordered list of objects, with each element accessible by the unique index number for its location in the list. A hash is also a list of objects (ordered in Ruby 1.9 and above), with each element identified by a unique key value, which can be any object but it typically a number or a string. So this brings us to the first way in which they are different. Hash key flexibility makes it easier to do some things with hashes. But not that different. An array can do the same thing if you create another array to translated keys into index numbers and vice/versa.</p>
-          <p>Conversely there will be times when the index numbers of an array are inherently useful, especially if the array is sorted, so increasing the index takes you to the next larger or smaller. If your hash starts out in the desired order, you could use the rank as the key. Or you can #sort a hash, but what that method returns is an array. So a sorted hash is literally an array!</p>
-          <p>So the difference is how values in an array are accessed and values in a hash are accessed is really very slight indeed.</p>
-          <p>It is also worth mentioning that the initial population of data into array is somewhat more compact in terms of number of characters, but the way a hash is created reads much more like plain lanaguage. This suggests the real issue when thinking about hashes and arrays. Ruby is intended to read like English, and hashes with strings as keys generate much more English-like code. So this would suggest that Rubyists may have an affinity for hashes that users of other programming languages don't share nearly as strongly.</p>
+          <p>I decided to investigate the designing for accessibility topic because J. Ky's discussion of the Atomic CSS framework in the video last week and our focus on semantic HTML made me wonder how all those individual style classes would work for people relying on semantic CSS who might prefer class names more related to the type of element than the details of how it would be styled.</p>
+          <p>As I worked through a few websites on accessibility some interesting topics came up.  Some made me realize that accessibility is a topic for lots of users beyond those with life-altering personal challenges like physical or visual limitations. For example, have you ever tried to navigate a website on your phone that just wouldn't work because there were pull-down menus your couldn't successfully operate? Well, welcome to the world that people who can't use a mouse face every day! Similarly, do you run into websites that are hard to read on your phone in bright light due to lack of contrast? Or have problems because there are images that you just can't zoom in on or otherwise get large enough to see clearly?  I sure have.  This are the same problems visually impaired users have with those sites every day.</p>
+          <p>Another topic that matters for accessibility is one we already ran into: how to use CSS and HTML to get elements to land where we want them on the page and screen. I was tempted to do lots of things to force elements where I wanted them despite where they wanted to go in the natural flow of the page. But people relying on text readers can only use the natural flow, so we should avoid breaking it, but rather working with it.  So columns would be better than tables, for example.</p>  
           <img src="image for blog">
       </section>
 
       <section class="blog-text">
-        <p>The other distinctions between hashes and arrays are a product of being different classes. Even if they were otherwise identical, by being different classes they can and do have different native methods. There are quite a few differences in the native methods available to the two classes, although many of those differences are array methods that involve the ordered nature of arrays and hash methods that manipulate keys and values. It is also surely true that we could write custom methods to duplicate the functionality of native methods available only to the other class. However, for a given application it would definitely make sense to choose the class that comes with the native method you need.
-        </p>
-        <p>The first native method difference I encountered that makes hashes better for a specific task is a very basic method: #new! <code>Hash.new(0)</code> is a very handy tool, since it means any previously unused key starts out with a default value of 0 rather than nil. This is very useful for exercises such as counting events (like occurrences of different words in a paragraph), since when a word is encountered <code>hash["word"] += 1</code> will work whether or not the word has been used before.</p>
-        <p>To sum up, I don't think a programming language needs to have hashes as a distinct class from arrays, but Ruby does, and it will be beneficial in Ruby to choose the right class of object to hold data based on the different methods available for each, while recognizing that hashes will often generate more Rubyist code with their plain language keys. </p>
+        <p></p>
       </section>
   
       <aside class="side-links">
