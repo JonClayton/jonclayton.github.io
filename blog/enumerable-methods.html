@@ -34,39 +34,80 @@
           <p>There is a HUGE, awful pun lurking here that I haven't the heart to figure out, related the notion that a slice can be a good thing in this kind of golf. But first the basics. #slice_when allow you to iterate through an array (or ordered hash), breaking it into pieces, cutting at points where the condition is satisfied. Sure, you hear that, but it takes examples to understand it.</p>
           <h3>Breaking a paragraph into sentences</h3>
           <p>Imagine your input is a string of text that is a whole paragraph, much like what we write in our text processors (that then extend way to the right when that file is displayed at GitHub!). But I'll use a simple one:
-          <code>"See Joe.  See Jane.   See them use array.sort and then laugh."</code>
-          You want to break it into sentences. We know #split, and sentences end with periods, so we'll try that:
-          <code>sentence= "See Joe.  See Jane.   See them use array.sort and then laugh."  
-          p sentence.split(".")</code>Let's see what happens: </p>
-          #split  I know split.  That's going to do it, right?  Just split at the periods. </p>
+          <code>"See Joe. See Jane.    See them use array.split and then cry.  Now they are sad."</code>
+          You want to break it into sentences. Even if they were calling it for the wrong class, Joe and Jane reminded us about #split, so let's try that. But before we do that I'm going to show you a little function I'm going to use to make it easier to read these arrays</p>
+          <code>def p_arr array
+          array.each {|element| puts "|#{element}|"}
+          end
+          </code>
+          <p>This will print each element of the array on a different line, surrounded by bars so you see any spaces at the start or end.</p>   
+          <p>Now, back to our story.  Since we know sentences end with periods, let's try to #split that way:</p>
+          <code>sentence= "See Joe. See Jane.    See them use array.split and then cry.  Now they are sad."  
+          <code>
+           sentence= "See Joe. See Jane.    See them use array.split and then cry.  Now they are sad." 
+            p_arr sentence.split(".") 
+            |See Joe| 
+            | See Jane| 
+            |    See them use array| 
+            |split and then cry| 
+            |  Now they are sad|  
+          </code>
+            <p>That didn't work at all. The periods disappeared, there are stray spaces around, and the array.split got chopped into different sentences.</p>
+            <p>But there's something else we might use.  Sentences have two spaces between them, right? So let's split when we find two spaces:</p>
+          <code>
+          p-arr sentence.split("  ")
+          |See Joe. See Jane.| 
+          || 
+          |See them use array.split and then cry.| 
+          |Now they are sad.| 
+          </code>
+
+          <p>Hmmm....not so good.  It was mean of me to have one of the sentences separated by three spaces, since that is wrong. But my friend Amy tells me it's correct to put only one space at the end of a sentence, so the first two sentences didn't get separated.  </p>
+          <p>Let's try again.  We do know that a space always comes between words, so let's split on any spaces we see:
+         p_arr sentence.split(" ")
+         |See| 
+|Joe.| 
+|See| 
+|Jane.| 
+|See| 
+|them| 
+|use| 
+|array.split| 
+|and| 
+|then| 
+|cry.| 
+|Now| 
+|they| 
+|are| 
+|sad.|
+          <p>You knew that was coming.  It's not all bad.  The extra spaces are all gone, array.split stayed in one piece, so no harm done. In fact, splitting on spaces is the default for #split because this is so handy. We just need to reassemble all these words into sentences. </p>
+          <p>Looking at this we'll see that the words at the end of sentences have periods following them.  So if we can break up this array into Now we have words, and conveniently the words at the end of sentences all end with periods.  Now we want to break our big array of words into a set of smaller arrays, and we want to have the breaks occur when we see a word with a period at the end.  Time for #slice_when!!! </p>
           <code>
             
           </code>
-          <p>Oops, all those stray spaces and it took away my periods.  And look at what happened when I wrote code. </p>
-          <p>Try again.  This time let's split on spaces </p>
+          <p>Wait, what the heck is that! Disaster! Nonsense! I don't even understand.  Settle down...this is a method on Enumerables, and it returns an Enumerator, which at this point to me is a black magic box that I can't start to explain.  But I can do something with it--turn it into an array (or hash): </p>
           <code>
             
           </code>
-          <p>Worked better.  In face this is the default for #split, and it cleaned up all the spaces. </p>
+          <p>That looks really good indeed.  The #slice_when syntax is pretty easy too:  array_to_be_sliced.slice_when{|name_you_choose_for_each_element| boolean_to_return_true_for_elements_after_which_you'd_slice}
+        </p>
+        <p>Now we just need to turn each of these arrays within the bigger array back into sentences, and we've done that before:</p>
           <code>
             
           </code>
-          <p>Now we have words, and conveniently the words at the end of sentences all end with periods.  Now we want to break our big array of words into a set of smaller arrays, and we want to have the breaks occur when we see a word with a period at the end.  Time for #slice_when!!! </p>
+          <p>Done. Now let's play some golf. If we add methods to the end of an expression, Ruby will perform that method on the result of what came before it. One thing to keep in mind is that in our multiline code above, we've either used destructive methods or had to set our variable equal to the result of the method to make that method destructive. When we combine them in expressions, that isn't an issue since the next method is performed on the result of the prior method. </p> so we can condense this:
           <code>
             
-          </code>
-          <p>Wait, what the heck is that! Disaster! Nonsense! I don't even understand.  Settled down...this is a method on Enumerables, and it returns an Enumerator.  We can't read it unless we put it into an array or hash </p>
-          <code>
             
           </code>
-          <p>Now we are talking!  Just need to turn each of these arrays within the bigger array back into sentences: </p>
+          <p>into this:</p>
           <code>
-            
+          
           </code>
-          <p>Done. Now let's play some golf. If we add methods to the end of an expression, Ruby will perform that method on the result of what came before it. One thing to keep in mind is that in our multiline code above, we've either used destructive methods or had to set our variable equal to the result of the method to make that method destructive. When we combine them in expressions, that isn't an issue since the next method is performed on the result of the prior method. </p>
+          
           <p>Alright, that's the end of the front nine on our golf course.  Time for a beer and then we'll turn to an application of #slice_when that may not be real world, but definitely applies to the Island Foxes: finding the mean of an array of numbers.  Obviously if you haven't completed Exercise 5.3 you should stay in the clubhouse and work on it rather than come with us to the back nine. </p>
           <h2>Finding Modes</h2>
-          <p>The obvious way to do Exercise 5.3 was to iterate through the items in the array, building a hash with item "name" keys and value equal to the number of times that item appeared.  Then manipulate that hash to find the highest number of occurrences and get the associated keys into an array.  But thanks to #slice_when we can do all that my manipulating the original array! </p>
+          <p>The obvious/intended/conventional way to do Exercise 5.3 was to iterate through the items in the array, building a hash with item "name" keys and value equal to the number of times that item appeared.  Then manipulate that hash to find the highest number of occurrences and get the associated keys into an array.  But thanks to #slice_when we can do all that my manipulating the original array! </p>
           Sort the array </p>
           <code>
             
