@@ -33,7 +33,11 @@
           <h2>#slice_when</h2>
           <p>There is a HUGE, awful pun lurking here that I haven't the heart to figure out, related the notion that a slice can be a good thing in this kind of golf. But first the basics. #slice_when allow you to iterate through an array (or ordered hash), breaking it into pieces, cutting at points where the condition is satisfied. Sure, you hear that, but it takes examples to understand it.</p>
           <h3>Breaking a paragraph into sentences</h3>
-          <p>Imagine your input is a string of text that is a whole paragraph, much like what we write in our text processors (that then extend way to right when that file is displayed at GitHub!). You want to break it into sentences. Let's see what happens: </p>
+          <p>Imagine your input is a string of text that is a whole paragraph, much like what we write in our text processors (that then extend way to the right when that file is displayed at GitHub!). But I'll use a simple one:
+          <code>"See Joe.  See Jane.   See them use array.sort and then laugh."</code>
+          You want to break it into sentences. We know #split, and sentences end with periods, so we'll try that:
+          <code>sentence= "See Joe.  See Jane.   See them use array.sort and then laugh."  
+          p sentence.split(".")</code>Let's see what happens: </p>
           #split  I know split.  That's going to do it, right?  Just split at the periods. </p>
           <code>
             
