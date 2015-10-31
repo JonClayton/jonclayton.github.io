@@ -34,92 +34,138 @@
           <p>There is a HUGE, awful pun lurking here that I haven't the heart to figure out, related the notion that a slice can be a good thing in this kind of golf. But first the basics. #slice_when allow you to iterate through an array (or ordered hash), breaking it into pieces, cutting at points where the condition is satisfied. Sure, you hear that, but it takes examples to understand it.</p>
           <h3>Breaking a paragraph into sentences</h3>
           <p>Imagine your input is a string of text that is a whole paragraph, much like what we write in our text processors (that then extend way to right when that file is displayed at GitHub!). You want to break it into sentences. Let's see what happens: </p>
-          #split  I know split.  That's going to do it, right?  Just split at the periods.
-          code
-          Oops, all those stray spaces and it took away my periods.  And look at what happened when I wrote code.
-          Try again.  This time let's split on spaces
-          code
-          Worked better.  In face this is the default for #split, and it cleaned up all the spaces.
-          code
-          Now we have words, and conveniently the words at the end of sentences all end with periods.  Now we want to break our big array of words into a set of smaller arrays, and we want to have the breaks occur when we see a word with a period at the end.  Time for #slice_when!!!
-          code
-          Wait, what the heck is that! Disaster! Nonsense! I don't even understand.  Settled down...this is a method on Enumerables, and it returns an Enumerator.  We can't read it unless we put it into an array or hash
-          code
-          Now we are talking!  Just need to turn each of these arrays within the bigger array back into sentences:
-          code
-          Done. Now let's play some golf. If we add methods to the end of an expression, Ruby will perform that method on the result of what came before it. One thing to keep in mind is that in our multiline code above, we've either used destructive methods or had to set our variable equal to the result of the method to make that method destructive. When we combine them in expressions, that isn't an issue since the next method is performed on the result of the prior method.
-          Alright, that's the end of the front nine on our golf course.  Time for a beer and then we'll turn to an application of #slice_when that may not be real world, but definitely applies to the Island Foxes: finding the mean of an array of numbers.  Obviously if you haven't completed Exercise 5.3 you should stay in the clubhouse and work on it rather than come with us to the back nine.
+          #split  I know split.  That's going to do it, right?  Just split at the periods. </p>
+          <code>
+            
+          </code>
+          <p>Oops, all those stray spaces and it took away my periods.  And look at what happened when I wrote code. </p>
+          <p>Try again.  This time let's split on spaces </p>
+          <code>
+            
+          </code>
+          <p>Worked better.  In face this is the default for #split, and it cleaned up all the spaces. </p>
+          <code>
+            
+          </code>
+          <p>Now we have words, and conveniently the words at the end of sentences all end with periods.  Now we want to break our big array of words into a set of smaller arrays, and we want to have the breaks occur when we see a word with a period at the end.  Time for #slice_when!!! </p>
+          <code>
+            
+          </code>
+          <p>Wait, what the heck is that! Disaster! Nonsense! I don't even understand.  Settled down...this is a method on Enumerables, and it returns an Enumerator.  We can't read it unless we put it into an array or hash </p>
+          <code>
+            
+          </code>
+          <p>Now we are talking!  Just need to turn each of these arrays within the bigger array back into sentences: </p>
+          <code>
+            
+          </code>
+          <p>Done. Now let's play some golf. If we add methods to the end of an expression, Ruby will perform that method on the result of what came before it. One thing to keep in mind is that in our multiline code above, we've either used destructive methods or had to set our variable equal to the result of the method to make that method destructive. When we combine them in expressions, that isn't an issue since the next method is performed on the result of the prior method. </p>
+          <p>Alright, that's the end of the front nine on our golf course.  Time for a beer and then we'll turn to an application of #slice_when that may not be real world, but definitely applies to the Island Foxes: finding the mean of an array of numbers.  Obviously if you haven't completed Exercise 5.3 you should stay in the clubhouse and work on it rather than come with us to the back nine. </p>
           <h2>Finding Modes</h2>
-          The obvious way to do Exercise 5.3 was to iterate through the items in the array, building a hash with item "name" keys and value equal to the number of times that item appeared.  Then manipulate that hash to find the highest number of occurrences and get the associated keys into an array.  But thanks to #slice_when we can do all that my manipulating the original array!
-          Sort the array
-          code
-          Slice the array between each cluster of the same item. But, you might ask, how can #slice_when do that?  We used it to decide when to cut based on whether an element had a period in it.  How can we tell it which instance of a number to slice after.  We can--I just didn't tell you that you actually have two arguments to use in #slice_when...the element before AND the element after the position of the slice.  So you can use both of those in a boolean expression to decide whether to slice between them.  And since we sorted the array, it's an even simpler boolean than we used on the sentences.
-          code
-          Now we are cooking. The next step is to replace each of these rather repetitive arrays with something more useful: an array much like the hash we talked about above, with the item as the first element and the number of occurences as the second.  #map does this very nicely for us:
-          code
-          Does the end feel close now?  The easy way to get done from here would be to iterate through this array twice: first to find the highest number of occurences and then to find the items associated with that number:
-          code
-          We can even do it with one iteration through the array if we are a little inventive:
-          code
-          But there's a problem for the golfers among us. Neither of these approaches are useful for golfing. The first one sort of branches our tree by using the array in two different ways. We can make this a single expression but it involves building the whole tree twice. This generates a result so ugly I won't even show it to you until the end of this post because it will make you run away screaming.
-          The single iteration approach above is actually a little more promising and I'll work on that and add it at the end too.  But there is a path we can follow that conveniently again uses a slice to get us onto the green.  We sort the array to get all the modes at the front
-          code
-          and we #slice_when again (we use #slice_when, but if we didn't want to keep the all the information in the array it would be a bit simple to use #take, which would discard the rest after the modes:
-          Code
-          We are putting for the win now, and it's not a hard putt.  We #map the first element of the arrays that contain the modes into a new array, and to make sure all this slicing and sorting hasn't messed up the order, we'll do one last #sort.
-          Code
-          So we've made this work.  Now we just want to see if we can get a hole-in-one in Code Golf.  String together all the methods we've performed consecutively on the same array:
-          code
+          <p>The obvious way to do Exercise 5.3 was to iterate through the items in the array, building a hash with item "name" keys and value equal to the number of times that item appeared.  Then manipulate that hash to find the highest number of occurrences and get the associated keys into an array.  But thanks to #slice_when we can do all that my manipulating the original array! </p>
+          Sort the array </p>
+          <code>
+            
+          </code>
+          <p>Slice the array between each cluster of the same item. But, you might ask, how can #slice_when do that?  We used it to decide when to cut based on whether an element had a period in it.  How can we tell it which instance of a number to slice after.  We can--I just didn't tell you that you actually have two arguments to use in #slice_when...the element before AND the element after the position of the slice.  So you can use both of those in a boolean expression to decide whether to slice between them.  And since we sorted the array, it's an even simpler boolean than we used on the sentences. </p>
+          <code>
+            
+          </code>
+          <p>Now we are cooking. The next step is to replace each of these rather repetitive arrays with something more useful: an array much like the hash we talked about above, with the item as the first element and the number of occurences as the second.  #map does this very nicely for us: </p>
+          <code>
+            
+          </code>
+          <p>Does the end feel close now?  The easy way to get done from here would be to iterate through this array twice: first to find the highest number of occurences and then to find the items associated with that number:
+          <code>
+            
+          </code>
+          <p>We can even do it with one iteration through the array if we are a little inventive:</p>
+          <code>
+            
+          </code>
+          <p>But there's a problem for the golfers among us. Neither of these approaches are useful for golfing. The first one sort of branches our tree by using the array in two different ways. We can make this a single expression but it involves building the whole tree twice. This generates a result so ugly I won't even show it to you until the end of this post because it will make you run away screaming.</p>
+          <p>The single iteration approach above is actually a little more promising and I'll work on that and add it at the end too.  But there is a path we can follow that conveniently again uses a slice to get us onto the green.  We sort the array to get all the modes at the front</p>
+          <code>
+            
+          </code>
+          <p>and we #slice_when again (we use #slice_when, but if we didn't want to keep the all the information in the array it would be a bit simple to use #take, which would discard the rest after the modes:</p>
+          <code>
+            
+          </code>
+          <p>We are putting for the win now, and it's not a hard putt.  We #map the first element of the arrays that contain the modes into a new array, and to make sure all this slicing and sorting hasn't messed up the order, we'll do one last #sort.</p>
+          <code>
+            
+          </code>
+          <p>So we've made this work.  Now we just want to see if we can get a hole-in-one in Code Golf.  String together all the methods we've performed consecutively on the same array:</p>
+          <code>
+            
+          </code>
           <h2>It's in the hole!</h2>
-          Time for a little dance! And also a bit of a wry look, because although this is just one expression, it is very long and would be hard to parse if you hadn't walked through it step-by-step.  So let's compare to what my first hole-in-one solution was:
-          code
+          <p>Time for a little dance! And also a bit of a wry look, because although this is just one expression, it is very long and would be hard to parse if you hadn't walked through it step-by-step.  So let's compare to what my first hole-in-one solution was:</p>
+          <code>
+            
+          </code>
           <h3>Other memorable golf shots</h3>
-          Before I show you the one line method I had before I understood #slice_when, best for a bit of pseudocode because the logic is very different, and it does rely on a recursive method:
-          Input: an array of items, in no particular order, one or more of which recur so there are one or more modes (mode means it appears the most times, ties are possible)
+          <p>Before I show you the one line method I had before I understood #slice_when, best for a bit of pseudocode because the logic is very different, and it does rely on a recursive method:</p>
+          <p>Input: an array of items, in no particular order, one or more of which recur so there are one or more modes (mode means it appears the most times, ties are possible)</p>
           
-          Output: an array with the names of the modes, each appearing only once in the array.
+          <p>Output: an array with the names of the modes, each appearing only once in the array.</p>
 
-          Overall approach: reduce the contents of the array down to the modes by iterating through the array tone copy of each remaining in the array
+          <p>Overall approach: reduce the contents of the array down to the modes by iterating through the array tone copy of each remaining in the array</p>
 
-          Important new method: Array#uniq, which returns an array containing one of each item that appears in the array.  Essentially it is deleting all duplicates.
+          <p>Important new method: Array#uniq, which returns an array containing one of each item that appears in the array.  Essentially it is deleting all duplicates.</p>
 
-          Details:
-          We know we are done when we get down to an array where every item in it appears only once
-          So WHILE array has duplicate elements
-            Get the #uniq version of the array
-            Iterate through the #uniq array, deleting from the primary array one occurrence of the element from the #uniq array
-            Repeat this until the WHILE is satisfied
-          Sort the resulting array and report it.
-          Let's see this loop in action one step at a time:
-          code
+          <p>Details:</p>
+          <p>We know we are done when we get down to an array where every item in it appears only once</p>
+          <p>So WHILE array has duplicate elements</p>
+            <ul><li>Get the #uniq version of the array</li>
+            <li>Iterate through the #uniq array, deleting from the primary array one occurrence of the element from the #uniq array</li>
+            <li>Repeat this until the WHILE is satisfied</li></ul>
+          <p/>Sort the resulting array and report it.</p>
+          <p>Let's see this loop in action one step at a time:</p>
+          <code>
+            
+          </code>
 
-          Now you get the underlying logic.  But you wonder how that works in one line.  Two more tools at work: ternary expression and recursion.  A ternary is really an IF-THEN-ELSE writen as 
-          IF condition ? THEN action : ELSE action
-          So let's write out what's going to happen:
-          IF my array has no duplicate items
-          THEN sort and return it
-          ELSE delete one copy of each AND do this IF-THEN-ELSE on the result
+          <p>Now you get the underlying logic.  But you wonder how that works in one line.  Two more tools at work: ternary expression and recursion.  A ternary is really an IF-THEN-ELSE writen as </p>
+          <p>IF condition ? THEN action : ELSE action</p>
+          <p>So let's write out what's going to happen:</p>
+          <p>IF my array has no duplicate items</p>
+          <p>THEN sort and return it</p>
+          <p>ELSE delete one copy of each AND do this IF-THEN-ELSE on the result</p>
 
-          The recusions is really just that last bit....do it again on the result of what I just did.  We call the method again on the result of running the method once, and keep doing that until we are done, whatever done means.
+          <p>The recursion is really just that last bit....do it again on the result of what I just did.  We call the method again on the result of running the method once, and keep doing that until we are done, whatever done means.</p>
 
-          The IF is simple:
-          code
-          As is the THEN
-          code
-          Here's the first part of the ELSE
-          code
-          And the recursion part of the else
-          Code
-          put it all together into the ternary statement and you get:
-          Code
-          As I said, I think the && glueing what is effectively another expression/action into the ternary probably means this is not a true "one line solution."  But its brevity and clarity make it a lot more attractive than the much longer and complex hole-in-one above.
+          <p>The IF is simple:</p>
+          <code>
+            
+          </code>
+          <p>As is the THEN</p>
+          <code>
+            
+          </code>
+          <p>Here's the first part of the ELSE</p>
+          <code>
+            
+          </code>
+          <p>And the recursion part of the else</p>
+          <code>
+            
+          </code>
+          <p>put it all together into the ternary statement and you get:
+          <code>
+            
+          </code>
+          <p>As I said, I think the && glueing what is effectively another expression/action into the ternary probably means this is not a true "one line solution."  But its brevity and clarity make it a lot more attractive than the much longer and complex hole-in-one above.</p>
 
-          And now, for those who have stuck this out because of the promise of a horror show at the end, the two treed solution that I mentioned above.  You might want to close your eyes.
+          <p>And now, for those who have stuck this out because of the promise of a horror show at the end, the two treed solution that I mentioned above.  You might want to close your eyes.</p>
           UGLY UGLY CODE.
+          <code>
+            
+          </code>
+          <p>This makes me impose another requirement on my efforts to write one line methods. They cannot be less DRY than the multiline version (which will always happen if the logic has a fork in it).  But as long as the one line version uses the same logic, I think it is OK to write, helps you learn new methods, and is fun in a very geeky way.</p>
 
-          This makes me impose another requirement on my efforts to write one line methods. They cannot be less DRY than the multiline version (which will always happen if the logic has a fork in it).  But as long as the one line version uses the same logic, I think it is OK to write, helps you learn new methods, and is fun in a very geeky way.
-
-          If you actually got to this point, please send me an email.  You deserve some sort of prize.......
+          <p>If you actually got to this point, please send me an email.  You deserve some sort of prize.......</p>
 
 
 
