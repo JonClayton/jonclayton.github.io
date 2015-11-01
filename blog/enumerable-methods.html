@@ -111,7 +111,7 @@
           </code>
           <p>Now we are cooking. The next step is to replace each of these rather repetitive arrays with something more useful: an array much like the hash we talked about above, with the item as the first element and the number of occurences as the second.  #map does this very nicely for us: </p>
           <code>
-          array2 = array.slice_when{|before,after|before<after}.to_a #we do this because slice_when is not destructive
+          array2 = array.slice_when{|before,after| before < after}.to_a #we do this because slice_when is not destructive
           p array2.map! {|bucket| [bucket[0],bucket.size]} 
           [[4, 2], [5, 3], [6, 3], [7, 1]] 
           </code>
@@ -146,7 +146,7 @@
           </code>
           <p>and we #slice_when again (we use #slice_when, but if we didn't want to keep the all the information in the array it would be a bit simpler to use #take, which would discard the rest after the modes:</p>
           <code>
-          p array3 =  array2.slice_when{|before,after|before[1]>after[1]}.to_a
+          p array3 =  array2.slice_when{|before,after| before[1] > after[1]}.to_a
           [[[5, 3], [6, 3]], [[4, 2]], [[7, 1]]] 
           </code>
           <p>We are putting for the win now, and it's not a hard putt.  We #map the first element of the arrays that contain the modes into a new array, and to make sure all this slicing and sorting hasn't messed up the order, we'll do one last #sort.</p>
@@ -158,17 +158,17 @@
           <code>
           array = [4, 4, 5, 5, 6, 6, 6, 7, 5]
           array.sort!
-          array2 = array.slice_when{|before,after|before<after}.to_a
+          array2 = array.slice_when{|before,after| before < after}.to_a
           array2.map! {|bucket|[bucket[0],bucket.size]}
           array2.sort!{|a,b|b[1]<=>a[1]}
-          array3 =  array2.slice_when{|before,after|before[1]>after[1]}.to_a
+          array3 =  array2.slice_when{|before,after| before[1] > after[1]}.to_a
           p array3[0].map{|pair|pair[0]}
           [5, 6]
           </code>
           <p>Note that putting it all in one expression does allow us to do away with the array2 and array3 and the bangs(!) because we're always using the result of the methods and don't care whether or not they are destructive</p>
           <code>
           array = [4, 4, 5, 5, 6, 6, 6, 7, 5]
-          p array.sort.slice_when{|before,after|before<after}.to_a.map{|bucket|[bucket[0],bucket.size]}.sort{|a,b|b[1]<=>a[1]}.slice_when{|before,after|before[1]>after[1]}.to_a[0].map{|pair|pair[0]}
+          p array.sort.slice_when{|before,after| before < after}.to_a.map{|bucket|[bucket[0],bucket.size]}.sort{|a,b|b[1]<=>a[1]}.slice_when{|before,after| before[1] > after[1]}.to_a[0].map{|pair|pair[0]}
           [5, 6]
           </code>
           <h2>It's in the hole!</h2>
