@@ -96,7 +96,8 @@
           <p>Alright, that's the end of the front nine on our golf course.  Time for a beer and then we'll turn to an application of #slice_when that may not be real world, but definitely applies to the Island Foxes: finding the mean of an array of numbers.  Obviously if you haven't completed Exercise 5.3 you should stay in the clubhouse and work on it rather than come with us to the back nine. </p>
           <h2>Finding Modes</h2>
           <p>Here's an old friend! One of the arrays from 5.3:</p>
-          <code>array = [4, 4, 5, 5, 6, 6, 6, 7, 5]</code>
+          <code>
+          array = [4, 4, 5, 5, 6, 6, 6, 7, 5]</code>
           <p>The obvious/intended/conventional way to do Exercise 5.3 was to iterate through the items in the array, building a hash with item "name" keys and value equal to the number of times that item appeared.  Then manipulate that hash to find the highest number of occurrences and get the associated keys into an array.  But thanks to #slice_when we can do all that my manipulating the original array! </p>
           Sort the array </p>
           <code>
@@ -106,7 +107,7 @@
           </code>
           <p>Slice the array between each cluster of the same item. But, you might ask, how can #slice_when do that?  We used it to decide when to cut based on whether an element had a period in it.  How can we tell it which instance of a number to slice after.  We can--I just didn't tell you that you actually have two arguments to use in #slice_when...the element before AND the element after the position of the slice.  So you can use both of those in a boolean expression to decide whether to slice between them.  And since we sorted the array, it's an even simpler boolean than we used on the sentences. </p>
           <code>
-          p array.slice_when{|before,after|before<after}.to_a
+          p array.slice_when{|before,after| before < after}.to_a
           [[4, 4], [5, 5, 5], [6, 6, 6], [7]] 
           </code>
           <p>Now we are cooking. The next step is to replace each of these rather repetitive arrays with something more useful: an array much like the hash we talked about above, with the item as the first element and the number of occurences as the second.  #map does this very nicely for us: </p>
@@ -227,7 +228,7 @@
           <p>And now, for those who have stuck this out because of the promise of a horror show at the end, the two treed solution that I mentioned above.  I had to tweak the methods a bit: you'll see "inject" because that's what we need to get the number of occurrences of the mode to use to find the numbers that occur that often.  That explanation may be wordy, but just wait...you might want to close your eyes.</p>
           <code>
           array = [4, 4, 5, 5, 6, 6, 6, 7, 5]
-          p array.sort.slice_when{|before,after|before<after}.to_a.map{|bucket|[bucket[0],bucket.size]}.map{|bucket| bucket[1] == array.sort.slice_when{|before,after|before<after}.to_a.map{|bucket|[bucket[0],bucket.size]}.inject {|bucket| $max=[bucket[1],max].max} ? bucket[0] : nil}.compact.sort
+          p array.sort.slice_when{|before,after| before < after}.to_a.map{|bucket|[bucket[0],bucket.size]}.map{|bucket| bucket[1] == array.sort.slice_when{|before,after| before < after}.to_a.map{|bucket|[bucket[0],bucket.size]}.inject {|bucket| $max=[bucket[1],max].max} ? bucket[0] : nil}.compact.sort
           [5,6]
           </code>
           <p>This makes me impose another requirement on my efforts to write one line methods. They cannot be less DRY than the multiline version (which will always happen if the logic has a fork in it).  But as long as the one line version uses the same logic, I think it is OK to write, helps you learn new methods, and is fun in a very geeky way.</p>
