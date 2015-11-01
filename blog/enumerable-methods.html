@@ -35,13 +35,8 @@
           <h3>Breaking a paragraph into sentences</h3>
           <p>Imagine your input is a string of text that is a whole paragraph, much like what we write in our text processors (that then extend way to the right when that file is displayed at GitHub!). But I'll use a simple one:
           <code>"See Joe. See Jane.    See them use array.split and then cry.  Now they are sad."</code>
-          You want to break it into sentences. Even if they were calling it for the wrong class, Joe and Jane reminded us about #split, so let's try that. But before we do that I'm going to show you a little function I'm going to use to make it easier to read these arrays</p>
-          <code>def p_arr array
-          array.each {|element| puts "|#{element}|"}
-          end
-          </code>
-          <p>This will print each element of the array on a different line, surrounded by bars so you see any spaces at the start or end.</p>   
-          <p>Now, back to our story.  Since we know sentences end with periods, let's try to #split that way:</p>
+          You want to break it into sentences. Even if they were calling it for the wrong class, Joe and Jane reminded us about #split, so let's try that. </p>
+          <p>Since we know sentences end with periods, let's try to #split that way:</p>
           <code>sentence= "See Joe. See Jane.    See them use array.split and then cry.  Now they are sad."  
           <code>
            sentence= "See Joe. See Jane.    See them use array.split and then cry.  Now they are sad." 
