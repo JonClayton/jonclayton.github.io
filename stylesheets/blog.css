@@ -1,14 +1,10 @@
 .bottom-links {
-	border-color: green;
-	border-width: 1px;
 	position: fixed;
 	bottom: 0px;
 	display: inline-block;
 }
 
 .bottom-links ul {
-	border-color: blue;
-	border-width: 2px;
 	position: fixed;
 	bottom: 0px;
 	right: 0%;
@@ -16,17 +12,11 @@
 }
 
 .bottom-links li {
-	border-color: blue;
-	border-width: 2px;
-	border-style: solid;
 	display: block;
 	margin: 3%;
 }
 
 .right-hand-bar {
-	border-color: green;
-	border-width: 1px;
-	border-style: solid;
 	position: relative;
 	display: block;
 	float: right;
@@ -35,9 +25,6 @@
 }
 
 .blog-header {
-	border-color: green;
-	border-width: 1px;
-	border-style: solid;
 	width: 70%;
 	display: inline-block;
 	text-align: center;
@@ -45,17 +32,11 @@
 }
 
 .blog-header li {
-	border-color: green;
-	border-width: 1px;
-	border-style: solid;
 	width: 15%;
 	display: inline-block;
 }
 
 .blog-text {
-	border-color: green;
-	border-width: 1px;
-	border-style: solid;
 	position: relative;
 	width: 65%;
 	float: left;

@@ -1,7 +1,4 @@
 h1 {
-	border-color: red;
-	border-width: 1px;
-	border-style: solid;
 	font-family: Verdana;
 	font-size: 4em;
 	font-weight: bold;
@@ -9,9 +6,6 @@ h1 {
 }
 
 nav {
-	border-color: red;
-	border-width: 1px;
-	border-style: solid;
 	display: block;
 	width: 20%;
 	float: left;
@@ -19,9 +13,6 @@ nav {
 }
 
 nav>div {
-	border-color: red;
-	border-width: 1px;
-	border-style: solid;
 	display: block;
 	float left;
 	text-align: left;
@@ -30,9 +21,6 @@ nav>div {
 }
 
 .photos {
-	border-color: red;
-	border-width: 1px;
-	border-style: solid;
 	top: 20%;
 	position: relative;
 	display: block;
@@ -40,25 +28,16 @@ nav>div {
 }
 
 .links {
-	border-color: red;
-	border-width: 1px;
-	border-style: solid;
 	display: block;
 	float: right;
 }
 
 a:hover {
-	border-color: red;
-	border-width: 1px;
-	border-style: solid;
 	color: blue;
 	font-weight: bold;
 }
 
 footer {
-	border-color: red;
-	border-width: 1px;
-	border-style: solid;
 	position: fixed;
 	bottom: 0%;
 	margin-left: 25%;
@@ -67,9 +46,6 @@ footer {
 }
 
 .side-links {
-	border-color: red;
-	border-width: 1px;
-	border-style: solid;
 	position: fixed;
 	right: 0%;
 	margin: 3%;
@@ -77,9 +53,6 @@ footer {
 }
 
 article {
-	border-color: red;
-	border-width: 1px;
-	border-style: solid;
 	margin: 3%;
 	width: 60%;
 	left: 5%;
