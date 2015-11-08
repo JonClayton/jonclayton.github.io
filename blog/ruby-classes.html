@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Methods in Service to Code Golf</title>  
+    <meta charset="UTF-8">
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/default.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/blog.css">
+
+
+  <body>
+    <img alt="My Logo" src="../imgs/Jon-photo.jpeg">
+    <header class="blog-header">
+      <div class="blog-header">
+      <h1>A Blog Too Far</h1>
+      <h2>Methods in Service to Code Golf</h2>
+      <h3>2 November 2015</h3>
+        <ul>
+            <li> <a href="../index.html" > Home </a> </li>
+            <li> <a href="index.html" > View Blog </a> </li>
+            <li> <a href="../about-me.html" > About Me </a> </li>
+            <li> <a href="https://github.com/JonClayton" > GitHub </a> </li>
+            <li> <a href="../sitemap.html" > Other </a> </li>
+        </ul>
+      </div>
+    </header>
+    <section class="blog-text">
+          <p>This post will eventually be about working with the <code>#slice_when</code> method. But first a little rambling about why I chose this method. Our assignment was to teach an Enumberable method in Ruby to our readers. Picking a method was a challenges. Many methods are simple and self-explanatory (like <code>#max</code>, <code>#min</code>, <code>#first</code>, <code>#last</code>) and wouldn't take any time to explain. Others are already becoming familiar to our cohort (like <code>#map/#collect</code>). Some are suggested in the assignment (<code>#group_by</code>, <code>#cycle</code>) so there will likely be a bunch of posts on them, and my post wouldn't be particularly interesting.</p>
+          <p>The obvious one we all need to learn more about is <code>#grep</code>. But that is by definition (Globally search a Regular Expression and Print) used primarily with regular expressions, a topic we haven't covered and Regex clearly falls into "black magic", meaning I find it hard to understand how it works, much less explain it. Similarly <code>#inject</code> and <code>#reduce</code> are super powerful, but with a hint of black magic. Just think about all that work to build <code>factorial(num)</code> when it's just <code>(1..num).reduce(:*)</code>!!!</p>
+          <p>At this point you should be wondering, since it was in my title, "I'm here for golf! When do we tee off?" Well, I'm getting to it.  Code Golf is a sometimes derogatory term for the exercise of writing the shortest possible code needed, even if it results in much less clear code. The wikipedia article is very interesting and sort of amazing/silly. In a way, using <code>#reduce</code> to calculate factorials is a very mild version of Code Golf because at this point in DBC we're supposed to making sure we can build the logically structured code it take to generate the steps one at a time that <code>#reduce</code> does internally all at one.</p>
+          <p>Another Code Golf behavior is stringing lots of methods together to accomplish on one line what might be done in a series of steps that would be easier to follow if they were spelled out. We're already accepting as proper using #each rather than an explicit loop to iterate through an array, so I think we're going to see method stringing become more acceptable as we go along. I don't find it nearly as objectionable as black magic methods, because all the steps are still there in the code. You just have to read the string carefully.</p>
+          <p>So for every "create a method" exercise we've had, I've tried to come up with a way to do it in a single expression. It was not too hard in week 4, but it got a lot harder here in week 5, especially when we were asked to come up with a method to calculate modes from arrays, which could be either a collection of numbers or a collection of words. I did get there, but I kindof had to cheat for the firs time by pushing my recursion onto the end of the expression when I think Ruby syntax would say it needed to be on the next line. I'll show that to you below. But the point here is that looking through the Enumberables methods carefully I realized that I could have used one of them to make my mode(array) method a somewhat better gold shot and avoid the need for recursion to make it work.
+          </p>  
+          <h2><code>#slice_when</code></h2>
+          <p>There is a HUGE, awful pun lurking here that I haven't the heart to figure out, related the notion that a slice can be a good thing in this kind of golf. But first the basics. <code>#slice_when</code> allow you to iterate through an array (or ordered hash), breaking it into pieces, cutting at points where the condition is satisfied. Sure, you hear that, but it takes examples to understand it.</p>
+          <h3>Breaking a paragraph into sentences</h3>
+          <p>Imagine your input is a string of text that is a whole paragraph, much like what we write in our text processors (that then extend way to the right when that file is displayed at GitHub!). But I'll use a simple one:</p>
+          <code>"See Joe. See Jane.    See them use array.split and then cry.  Now they are sad."</code>
+          <p>You want to break it into sentences. Even if they were calling it for the wrong class, Joe and Jane reminded us about <code>#split</code>, so let's try that. </p>
+          <p>Since we know sentences end with periods, let's try to<code> #split</code> that way:</p>
+          <code>
+           sentence= "See Joe. See Jane.    See them use array.split and then cry.  Now they are sad." <br>
+            p sentences = paragraph.split(".")<br>
+           irb>["See Joe", " See Jane", "    See them use array", "split and then cry", "  Now they are sad"] 
+          </code>
+            <p>That didn't work at all. The periods disappeared, there are stray spaces around, and the array.split got chopped into different sentences.</p>
+            <p>But there's something else we might use.  Sentences have two spaces between them, right? So let's split when we find two spaces:</p>
+          <code>
+          p sentences = paragraph.split("  ")<br>
+          irb>["See Joe. See Jane.", "", "See them use array.split and then cry.", "Now they are sad."] 
+          </code>
+          <p>Hmmm....not so good.  It was mean of me to have one of the sentences separated by three spaces, since that is wrong. But my friend Amy tells me it's correct to put only one space at the end of a sentence, so the first two sentences didn't get separated.  </p>
+          <p>Let's try again.  We do know that a space always comes between words, so let's split on any spaces we see:
+          <code>
+          p words = paragraph.split(" ")<br>
+          irb>["See", "Joe.", "See", "Jane.", "See", "them", "use", "array.split", "and", "then", "cry.", "Now", "they", "are", "sad."]
+          </code>
+          <p>You knew that was coming.  It's not all bad.  The extra spaces are all gone, array.split stayed in one piece, so no harm done. In fact, splitting on spaces is the default for #split because this is so handy. We just need to reassemble all these words into sentences. </p>
+          <p>Looking at this we'll see that the words at the end of sentences have periods following them.  So if we can break up this array into Now we have words, and conveniently the words at the end of sentences all end with periods.  Now we want to break our big array of words into a set of smaller arrays, and we want to have the breaks occur when we see a word with a period at the end.  Time for #slice_when!!! </p>
+          <code>
+          words = paragraph.split<br>
+          p sentences = words.slice_when{|word| word[-1]=="."} <br>
+          irb>#&ltEnumerator: #&ltEnumerator::Generator:0x00000001e9d2d8>:each> 
+          </code>
+          <p>Wait, what the heck is that! Disaster! Nonsense! I don't even understand.  Settle down...this is a method on Enumerables, and it returns an Enumerator, which at this point to me is a black magic box that I can't start to explain.  But I can do something with it--turn it into an array (or hash): </p>
+          <code>
+          p sentences = words.slice_when{|word| word[-1]=="."}.to_a<br>
+          irb>[["See", "Joe."], ["See", "Jane."], ["See", "them", "use", "array.split", "and", "then", "cry."], ["Now", "they", "are", "sad."]]
+          </code>
+          <p>That looks really good indeed.  The <code>#slice_when</code> syntax is pretty easy too:  <code>array_to_be_sliced.slice_when{|name_you_choose_for_each_element| boolean_to_return_true_for_elements_after_which_you'd_slice}</code>
+        </p>
+        <p>Now we just need to turn each of these arrays within the bigger array back into sentences, and we've done that before:</p>
+          <code>
+          p finished = sentences.map {|words| words.join(" ")}<br>
+          irb>["See Joe.", "See Jane.", "See them use array.split and then cry.", "Now they are sad."] 
+          </code>
+          <p>Done. Now let's play some golf. If we add methods to the end of an expression, Ruby will perform that method on the result of what came before it. One thing to keep in mind is that in our multiline code above, we've either used destructive methods or had to set our variable equal to the result of the method to make that method destructive. When we combine them in expressions, that isn't an issue since the next method is performed on the result of the prior method. </p> 
+          <p>so we can condense this:</p>
+          <code>
+          paragraph= "See Joe. See Jane.    See them use array.split and then cry.  Now they are sad."<br> 
+          words = paragraph.split<br>
+          sentences = words.slice_when{|word| word[-1]=="."}.to_a<br>
+          p finished = sentences.map {|words| words.join(" ")}<br>
+          irb>["See Joe.", "See Jane.", "See them use array.split and then cry.", "Now they are sad."] 
+          </code>
+          <p>into this:</p>
+          <code>
+          paragraph= "See Joe. See Jane.    See them use array.split and then cry.  Now they are sad." <br>
+          p paragraph.split().slice_when{|word| word[-1]=="."}.to_a.map {|words| words.join(" ")} <br>
+          irb>["See Joe.", "See Jane.", "See them use array.split and then cry.", "Now they are sad."] 
+          </code>
+          <p>We could even get more silly:</p>
+          <code>
+          p "See Joe. See Jane.    See them use array.split and then cry.  Now they are sad.".split().slice_when{|word| word[-1]=="."}.to_a.map {|words| words.join(" ")} <br>
+          irb>["See Joe.", "See Jane.", "See them use array.split and then cry.", "Now they are sad."] 
+          </code>
+          <p>Alright, that's the end of the front nine on our golf course.  Time for a beer and then we'll turn to an application of #slice_when that may not be real world, but definitely applies to the Island Foxes: finding the mean of an array of numbers.  Obviously if you haven't completed Exercise 5.3 you should stay in the clubhouse and work on it rather than come with us to the back nine. </p>
+          <h2>Finding Modes</h2>
+          <p>Here's an old friend! One of the arrays from 5.3:</p>
+          <code>
+          array = [4, 4, 5, 5, 6, 6, 6, 7, 5]</code>
+          <p>The obvious/intended/conventional way to do Exercise 5.3 was to iterate through the items in the array, building a hash with item "name" keys and value equal to the number of times that item appeared.  Then manipulate that hash to find the highest number of occurrences and get the associated keys into an array.  But thanks to #slice_when we can do all that my manipulating the original array! </p>
+          Sort the array </p>
+          <code>
+          array = [4, 4, 5, 5, 6, 6, 6, 7, 5]<br>
+          p array.sort!<br>
+          irb>[4, 4, 5, 5, 5, 6, 6, 6, 7] 
+          </code>
+          <p>Slice the array between each cluster of the same item. But, you might ask, how can <code>#slice_when</code> do that?  We used it to decide when to cut based on whether an element had a period in it.  How can we tell it which instance of a number to slice after.  We can--I just didn't tell you that you actually have two arguments to use in #slice_when...the element before AND the element after the position of the slice.  So you can use both of those in a boolean expression to decide whether to slice between them.  And since we sorted the array, it's an even simpler boolean than we used on the sentences. </p>
+          <code>
+          p array.slice_when{|before,after| before < after}.to_a<br>
+          irb>[[4, 4], [5, 5, 5], [6, 6, 6], [7]] 
+          </code>
+          <p>Now we are cooking. The next step is to replace each of these rather repetitive arrays with something more useful: an array much like the hash we talked about above, with the item as the first element and the number of occurences as the second.  #map does this very nicely for us: </p>
+          <code>
+          array2 = array.slice_when{|before,after| before < after}.to_a #we do this because slice_when is not destructive<br>
+          p array2.map! {|bucket| [bucket[0],bucket.size]} <br>
+          irb>[[4, 2], [5, 3], [6, 3], [7, 1]] 
+          </code>
+          <p>Does the end feel close now?  The easy way to get done from here would be to iterate through this array twice: first to find the highest number of occurences and then to find the items associated with that number:</p>
+          <code>
+          max = 0<br>
+          array2.each {|bucket| max=[bucket[1],max].max}<br>
+          modes = []<br>
+          array2.each {|bucket| modes << bucket[0] if bucket[1] == max}<br>
+          p modes  <br>
+          irb>[5, 6] 
+          </code>
+          <p>We can even do it with one iteration through the array if we are a little inventive:</p>
+          <code>
+          max = 0<br>
+          modes = []<br>
+          array2.each do |bucket|<br>
+            if bucket[1] > max<br>
+              max = bucket[1]<br>
+              modes = []<br>
+            end<br>
+            modes << bucket[0] if max == bucket[1]<br>
+          end<br>
+          p modes  <br>
+          irb>[5, 6]
+          </code>
+          <p>But there's a problem for the golfers among us. Neither of these approaches are useful for golfing. The first one sort of branches our tree by using the array in two different ways. We can make this a single expression but it involves building the whole tree twice. This generates a result so ugly I won't even show it to you until the end of this post because it will make you run away screaming.</p>
+          <p>But there is a path we can follow that conveniently enough for the purpose of this blog again uses a slice to get us onto the green.  We sort the array to get all the modes at the front</p>
+          <code>
+           p array2.sort!{|a,b|b[1]<=>a[1]}<br>
+           irb>[[5, 3], [6, 3], [4, 2], [7, 1]] 
+          </code>
+          <p>and we #slice_when again (we use #slice_when, but if we didn't want to keep the all the information in the array it would be a bit simpler to use #take, which would discard the rest after the modes:</p>
+          <code>
+          p array3 =  array2.slice_when{|before,after| before[1] > after[1]}.to_a<br>
+          irb>[[[5, 3], [6, 3]], [[4, 2]], [[7, 1]]] 
+          </code>
+          <p>We are putting for the win now, and it's not a hard putt.  We #map the first element of the arrays that contain the modes into a new array, and to make sure all this slicing and sorting hasn't messed up the order, we'll do one last #sort.</p>
+          <code>
+          p array3[0].map {|pair| pair[0]}<br>
+          irb>[5, 6]
+          </code>
+          <p>So we've made this work.  Now we just want to see if we can get a hole-in-one in Code Golf.  String together all the methods we've performed consecutively on the same array!  As a reminder here's how we got here:</p>
+          <code>
+          array = [4, 4, 5, 5, 6, 6, 6, 7, 5]<br>
+          array.sort!<br>
+          array2 = array.slice_when {|before,after| before < after}.to_a<br>
+          array2.map! {|bucket|[bucket[0],bucket.size]}<br>
+          array2.sort! {|a,b| b[1] <=> a[1]}<br>
+          array3 =  array2.slice_when {|before,after| before[1] > after[1]}.to_a<br>
+          p array3[0].map {|pair| pair[0]}<br>
+          irb>[5, 6]
+          </code>
+          <p>Note that putting it all in one expression does allow us to do away with the array2 and array3 and the bangs(!) because we're always using the result of the methods and don't care whether or not they are destructive</p>
+          <code>
+          array = [4, 4, 5, 5, 6, 6, 6, 7, 5]<br>
+          p array.sort.slice_when {|before,after| before < after}.to_a.map {|bucket| [bucket[0],bucket.size]}.sort {|a,b| b[1] <=> a[1]}.slice_when {|before,after| before[1] > after[1]}.to_a[0].map {|pair| pair[0]}<br>
+          irb>[5, 6]
+          </code>
+          <h2>It's in the hole!</h2>
+          <p>Time for a little dance! And also a bit of a wry look, because although this is just one expression, it is very long and would be hard to parse if you hadn't walked through it step-by-step.  So let's compare to what my first hole-in-one solution was:</p>
+          <h3>Other memorable golf shots</h3>
+          <p>Before I show you the one line method I had before I understood #slice_when, best for a bit of pseudocode because the logic is very different, and it does rely on a recursive method:</p>
+          <p>Input: an array of items, in no particular order, one or more of which recur so there are one or more modes (mode means it appears the most times, ties are possible)</p>
+          <p>Output: an array with the names of the modes, each appearing only once in the array.</p>
+          <p>Overall approach: reduce the contents of the array down to the modes by iterating through the array tone copy of each remaining in the array</p>
+          <p>Important new method: <code>Array#uniq</code>, which returns an array containing one of each item that appears in the array.  Essentially it is deleting all duplicates.</p>
+          <p>Details:</p>
+          <p>We know we are done when we get down to an array where every item in it appears only once</p>
+          <p>So WHILE array has duplicate elements</p>
+            <ul><li>Get the <code>#uniq</code> version of the array</li>
+            <li>Iterate through the <code>#uniq</code>  array, deleting from the primary array one occurrence of the element from the <code>#uniq</code>  array</li>
+            <li>Repeat this until the WHILE is satisfied</li></ul>
+          <p>Sort the resulting array and report it.</p>
+          <p>Let's see this loop in action one step at a time:</p>
+          <code>
+          until array == array.uniq do<br>
+            array.uniq.each do |element| <br>
+              array.delete_at(array.index(element)) <br>
+            end <br>
+          end<br>
+          p array.sort <br>
+          irb>[5,6] # hello old friends!<br>
+          </code>
+          <p>Now you get the underlying logic.  But you wonder how that works in one line.  Two more tools at work: ternary expression and recursion.  A ternary is really an IF-THEN-ELSE writen as </p>
+          <p>IF condition ? THEN action : ELSE action</p>
+          <p>So let's write out what's going to happen:</p>
+          <p>IF my array has no duplicate items</p>
+          <p>THEN sort and return it</p>
+          <p>ELSE delete one copy of each unique item AND do this IF-THEN-ELSE on the result</p>
+          <p>The recursion is really just that last bit....do it again on the result of what I just did.  We call the method again on the result of running the method once, and keep doing that until we are done, whatever done means.</p>
+          <p>The IF is simple and we've already seen it:</p>
+          <code>
+          array == array.uniq
+          </code>
+          <p>As is the THEN, which is what the expression will return when we are done:</p>
+          <code>
+          array.sort 
+          </code>
+          <p>Here's the first part of the ELSE is the one line version of the <code>array.uniq.each</code> above:</p>
+          <code>
+          array.uniq.each {|element| array.delete_at(array.index(element))}
+          </code>
+          <p>And the recursion part of the else</p>
+          <code>
+          mode(array)  
+          </code>
+          <p>put it all together into the ternary statement and you get:</p>
+          <code>
+          array == array.uniq ? array.sort : array.uniq.each {|element| array.delete_at(array.index(element))} && mode(array)  
+          </code>
+          <p>As I said, I think the <code>&&</code> glueing what is effectively another expression/action into the ternary probably means this is not a true "one expression solution."  But its relative brevity and clarity make it a lot more attractive than the much longer and complex hole-in-one above.</p>
+          <p>And now, for those who have stuck this out because of the promise of a horror show at the end, the two treed solution that I mentioned above.  I had to tweak the methods a bit: you'll see "inject" because that's what we need to get the number of occurrences of the mode to use to find the numbers that occur that often.  That explanation may be wordy, but just wait...you might want to close your eyes.</p>
+          <code>
+          array = [4, 4, 5, 5, 6, 6, 6, 7, 5] <br>
+          p array.sort.slice_when {|before,after| before &lt after}.to_a.map {|bucket| [bucket[0],bucket.size]}.map {|bucket| bucket[1] == array.sort.slice_when {|before,after| before < after}.to_a.map {|bucket|[bucket[0],bucket.size]}.inject {|bucket| $max=[bucket[1],$max].max} ? bucket[0] : nil}.compact.sort<br>
+          irb>[5,6]
+          </code>
+          <p>This makes me impose another requirement on my efforts to write one line methods. They cannot be less DRY than the multiline version (which will always happen if the logic has a fork in it).  But as long as the one line version uses the same logic, I think it is OK to write, helps you learn new methods, and is fun in a very geeky way.</p>
+          <p>If you actually got to this point, please send me an email.  You deserve some sort of prize.......</p>
+          <img alt="Random appropriate image" src="http://www.gifandgif.eu/animated_gif/Gifts/Animated%20gif%20Gift%20(1).gif">
+      </section>
+
+      <section class="blog-text">
+        <p></p>
+      </section>
+  
+      <aside class="side-links">
+        <ul>
+            <li> <a href="accessibility.html" > We all have accessibility problems </a> </li>         
+            <li> <a href="array-hashes.html" > Mi Casa es Su Array</a> </li>
+            <li> <a href="index.html" > Blog Archive</a> </li> 
+        </ul>
+      </aside>
+    <aside class="bottom-links">
+      <ul>
+        <li> <a href="comments for blog link" > Comments</a>
+        <li> <a href="share on Facebook link" > Share on Facebook</a>
+        <li> <a href="comments for blog link" > Share on Twitter</a>         
+      </ul>
+    </aside>
+  </body>
+  </html>
