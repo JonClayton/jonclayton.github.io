@@ -28,84 +28,63 @@
           <p>This is a post about creating a class.  We are going to build two classes, and then run some methods.  I'm going to include a lot of comments along the way.
           </p>  
           <p>Everyone needs a pet, and every pet needs a name</p>
-          <pre class-"prettyprint">
-          class Pet
-            def initialize (name)
-              @name = name
-            end
-          </pre>
+          <pre class="prettyprint">class Pet
+  def initialize (name)
+    @name = name
+  end</pre>
           <p>Now we can create a pet and when we do, we're required to give it a name or we will get an error. Next we want to create a class function. This is a function that is called on the class itself, not on a particular instance of it. So it should have something to do with the entire class, not just one member of it.</p>
-          <pre class = "prettyprint">
-            def self.purpose
-              puts "The purpose of a #{self} is love."
-            end
-          </pre>
+          <pre class = "prettyprint">  def self.purpose
+    puts "The purpose of a #{self} is love."
+  end</pre>
           <p>That is the purpose of a pet, no? Next we need some instance methods, to be called on our particular pet. Given the broad range of pets, there's not many things I can think of.  After them we will close the class definition with another end</p>
-          <pre class = "prettyprint">  
-            def eat
-              puts "#{@name} eats"
-            end
+          <pre class = "prettyprint">  def eat
+    puts "#{@name} eats"
+  end
   
-            def sleep
-              puts "zzzzzz"
-            end
+  def sleep
+    puts "zzzzzz"
+  end
   
-          end
-          </pre>
+end</pre>
           <p>I think it is worth creating a sub-class of Pet, in order to illustrate a few things.  First notice how we make it a sub-class so it will inherit methods and other features of the parent unless with change them when we define the sub-class.</p>
-          <pre class = "prettyprint">
-          class Dog < Pet
-           </pre>
+          <pre class = "prettyprint">class Dog < Pet</pre>
           <p>Now that we've narrowed down our type of Pet we can put in more methods. For example, dogs are not silent like fish.</p>
-          <pre class = "prettyprint"> 
-            def bark
-              puts "#{@name} says 'Arf!'"
-            end
-              </pre>
+          <pre class = "prettyprint">  def bark
+    puts "#{@name} says 'Arf!'"
+  end</pre>
           <p>However, even though all Pets eat, Dogs eat a bit differently, so we'll change that instance method and then close the class definition.</p>
-          <pre class = "prettyprint">
-            def eat
-              puts "#{@name} drools and then eats"
-            end  
+          <pre class = "prettyprint">  def eat
+    puts "#{@name} drools and then eats"
+  end  
   
-          end
-          </pre>
-          <p>Now lets use our classes and methods to see how they work.  What's the purpose of a Pet?</p>
-          <pre class-"prettyprint">
-          Pet.purpose  #=> The purpose of a Pet is love.</pre>   
+end</pre>
+          <p>Now let's use our classes and methods to see how they work.  What's the purpose of a Pet?</p>
+          <pre class = "prettyprint">Pet.purpose  #=> The purpose of a Pet is love.</pre>   
           <p>My first pet is named Kate, but our Class doesn't give me feedback when I create and name her. At least I don't get an error!</p>       
-          <pre class-"prettyprint">
-          kate = Pet.new("Kate") #=> nil</pre>
+          <pre class = "prettyprint">kate = Pet.new("Kate") #=> nil</pre>
           <p>Let's give Kate some food:</p>
-          <pre class-"prettyprint">
-          kate.eat #=> Kate eats</pre>
+          <pre class = "prettyprint">kate.eat #=> Kate eats</pre>
           <p>And if we leave her alone for a while she might.....</p>
-          <pre class-"prettyprint">
-          kate.sleep #=> zzzzzzz</pre>
+          <pre class = "prettyprint">kate.sleep #=> zzzzzzz</pre>
           <p>What if we ask Kate to bark?</p>
-          <pre class-"prettyprint">
-          #kate.bark # Error: Kate doesn't have this method because she's not a dog</pre>
+          <pre class = "prettyprint">kate.bark # Error: Kate doesn't have this method because she's not a dog</pre>
           <p>And we also get an error if we look for a deep purpose in Kate</p>
-          <pre class-"prettyprint">
-          #kate.purpose # Error: #purpose is a class method, not an instance method, so kate doesn't have it</pre>
-          <pre class-"prettyprint">
+          <pre class = "prettyprint">kate.purpose # Error: this is a class (not an instance) method, so kate doesn't have it</pre>
           <p>Let's move on to dogs. Do they have a purpose?</p>  
-          Dog.purpose #=> The purpose of a Dog is love</pre>
+          <pre class = "prettyprint">Dog.purpose #=> The purpose of a Dog is love</pre>
           <p>They do, even though we didn't tell the Dog class its purpose. A class must inherit from its parent not just instance methods but class methods.  Nice to know! Let's create and name our dog. My name is really original!</p>
-          <pre class-"prettyprint">
-          rover = Dog.new("Rover") #=> nil</pre>
+          <pre class = "prettyprint">rover = Dog.new("Rover") #=> nil</pre>
           <p>Did that almost sneak by? I wasn't sure it would work myself. Since we didn't define an initialize method for the Dog class, it did inherit even that method from the Pet class, so our creation of Rover included giving him a name.</p>
           <p>Rover of course eats like a dog, but sleeps just like any other pet because the sleep method was inherited while the eat method was changed by the Dog class definition.  He also does something mere Pets cannot, since that method is unique to Dogs (so far):</p>
-          <pre class-"prettyprint">
-          rover.eat #=> Rover drools and then eats
-          rover.sleep #=> zzzzzzz
-          rover.bark #=> Rover says 'Arf!'</pre>
-          <p>Actually I lied a little bit above. Rover does know his purpose as a dog. You just have to remind him he is one with the <code>#class</code> method (as opposed to "a class method"--confusing, huh?)</p>
-          <pre class-"prettyprint">
-          rover.class.purpose #=> The purpose of a Dog is love.</pre>
-          <p>And you can even ask Dogs what their parent class's purpose is:</p>
-          <pre class-"prettyprint">
-          rover.class.superclass.purpose #=> The purpose of a Pet is love.</pre>
+          <pre class = "prettyprint">rover.eat #=> Rover drools and then eats
+rover.sleep #=> zzzzzzz
+rover.bark #=> Rover says 'Arf!'</pre>
+          <p>Actually I lied a little bit above. Rover does know his purpose as a dog. You just have to remind him he is one with the <code>#class</code> method that can be called on any object asking it to show some class (oh, sorry, couldn't resist the pun--the class of which it is a member).  This is different from "a class method", which is describes all the methods that can be called on the particular class.</p>
+          <p>Confusing, huh?  Let me try some more. <code>#class</code> is an instance method, created in the definition of "Object", the ultimate parent class of all classes in Ruby.  Any object can have <code>.class</code> written after it, and Ruby will return the name of the class that object is a member of. On the other hand, the definition of any class can define, using the <code>self</code> language we saw above, a method that will be available when called on that class's name.</p>
+          <p>Still not there? I'm not surprised. It is confusing. So here's an example.</p>
+          <pre class = "prettyprint">rover.class.purpose #=> The purpose of a Dog is love.</pre>
+          <p>We used the <code>#class</code> method on <code>rover</code>, so Ruby evaluated it as Dog (the class Dog). Then we used <code>#purpose</code> on that and got the purpose of Dogs.  You can even ask Dogs what their parent class's purpose is:</p>
+          <pre class = "prettyprint">rover.class.superclass.purpose #=> The purpose of a Pet is love.</pre>
           <p>Now you've learned enough to be dangerous about how to define a class, give it class and instance methods, define a sub-class with inherited methods, revise those inherited methods and add new ones.  And you know how to get information from a class or a member of that class using all those methods. Go forth and use that knowledge for good!</p>
       </section>
 
