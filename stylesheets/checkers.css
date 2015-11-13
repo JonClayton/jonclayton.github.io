@@ -1,0 +1,60 @@
+/*Note: There are three different ways to add background colors here.
+You can add them using a name (for common names), Hex, or RGB values.
+*/
+
+body {
+  background-color: blue;
+}
+
+.board {
+	background-color: white;
+	display: inline-block;
+	width: auto;
+	height: auto;
+	padding: 2px;
+	border: 2px black solid;
+}
+
+.row {
+	background-color: black;
+	display: inline-block;
+	width: auto;
+	height: auto;
+	padding: 0px;
+	border-left: 3px solid black;
+	border-right: 3px solid black;
+	top: 0px;
+}
+
+.square1 {
+	border: black 1px;
+	background-color: gray;
+	display: inline-block;
+	position: relative;
+	margin: 0;
+	width: 4.5em;
+	height: 4.5em;
+	left: 0px;
+}
+
+.square {
+	border: black 1px;
+	background-color: white;
+	display: inline-block;
+	position: relative;
+	margin: 0;
+	width: 4.5em;
+	height: 4.5em;
+	left: 0px;
+}
+
+.circle {
+	position: absolute;
+	width: 4.5em;
+	height: 4.5em;
+	margin: 0%;
+	border-radius: 2.25em;
+	text-decoration-color: red;
+	text-align: center;
+	line-height: 400%;
+}
