@@ -1,0 +1,9 @@
+* {
+	background-color: blue;
+}
+
+.dog {
+	background-color: red
+	width: 3em;
+	height: 3em;
+}

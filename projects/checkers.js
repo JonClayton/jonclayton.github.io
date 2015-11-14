@@ -44,11 +44,11 @@ build function to ask for and implement move for each player
 - print board
 
 - later improvements:
-  - jump moves
+DONE  - jump moves
   - additional jumps on same move if available
   - taking turns
-  - kinging and reversible movement as a result
-  - visual display of board
+DONE  - kinging and reversible movement as a result
+DONE  - visual display of board
   - click entry to move and destination
   - automatic analysis of which pieces can move and when clicked, where they can move to
   - display available moves by flashing piece, and destinations when piece is clicked
@@ -69,6 +69,7 @@ build function to ask for and implement move for each player
 */
 var hLine = "-------------------------------------------------------------------";
 
+/*  CONSOLE INTERFACE, NO LONGER NEEDED
 function SquareLineOutput(row,col,line) {
   if ((row+col)%2==0) return "-------|";
   var space=(8-row)*4+(Math.ceil(col/2))
@@ -94,8 +95,15 @@ function PrintBoard() {
     console.log(hLine);
   }
 }
+*/
+var board = [];
+var move = [];
+var upPlayersTurn = true;
+var jumped = false;
+var upPlayer = "X"
+var downPlayer = "O"
 
-var board = []
+function Mover() {return upPlayersTurn ? upPlayer : downPlayer};
 
 function Space (number, owner) {
   this.name = "space" + number.toString();
@@ -109,8 +117,8 @@ function Space (number, owner) {
 function InitializeBoard() {
   for (space =1; space < 33; space++) {
     var owner = " "
-    if (space < 13) owner = "X";
-    if (space > 20) owner = "O";
+    if (space < 13) owner = upPlayer;
+    if (space > 20) owner = downPlayer;
     board[space] = new Space (space, owner);
   }
   board[1].upMoves = [5];
@@ -166,8 +174,8 @@ function InitializeBoard() {
 function UpdateBoardHTML() {
   board.forEach (function (space, index) {
     var color = false
-    if (space.owner == "X") color = "red";
-    if (space.owner == "O") color = "black";
+    if (space.owner == upPlayer) color = "red";
+    if (space.owner == downPlayer) color = "black";
     var square = document.getElementById(space.name);
     if (color) console.log(square.style.background = color);
     else console.log(square.style.background = "");
@@ -184,22 +192,29 @@ function UpdateBoardHTML() {
   })
 }
 
-function MoveValidator(start,finish) {
-  if (board[start].owner == " ") return [false, "There is no checker on that space."];
-  if (board[finish].owner != " ") return [false, "The target space is occupied."];
+function MoveValidator() {
+  var start = move[0];
+  var finish = move[1];
   var validMove = false;
-  if (board[start].owner == "X" || board[start].king) {
-    board[start].upMoves.forEach(function (space) {if (space == finish) validMove=[true, "move"]});
+  var message = ""
+  var notMover = upPlayersTurn ? downPlayer : upPlayer;
+  if (upPlayersTurn || board[start].king) {
+    board[start].upMoves.forEach(function (space) {if (space == finish) validMove=true});
     board[start].upJumps.forEach(function (space, index) {
-      if (space == finish && board[board[start].upMoves[index]].owner!=" " && board[board[start].upMoves[index]].owner!=board[start].owner) validMove=[true, board[start].upMoves[index]]});
+      if (space == finish && board[board[start].upMoves[index]].owner==notMover) validMove=board[start].upMoves[index]});
   }
-  if (board[start].owner == "O" || board[start].king) {
-    board[start].downMoves.forEach(function (space) {if (space == finish) validMove=[true, "move"]});
+  if (!upPlayersTurn || board[start].king) {
+    board[start].downMoves.forEach(function (space) {if (space == finish) validMove=true});
     board[start].downJumps.forEach(function (space, index) {
-      if (space == finish && board[board[start].downMoves[index]].owner!=" " && board[board[start].downMoves[index]].owner!=board[start].owner) validMove=[true,board[start].downMoves[index]]});
+      if (space == finish && board[board[start].downMoves[index]].owner==notMover) validMove=board[start].downMoves[index]});
   }
-  if (!validMove) return [false, "That checker cannot move there."];
-  return validMove;
+  if (!validMove) {
+    move = [];
+    return false;
+  }
+  jumped = typeof validMove=="number";
+  MoveCheckers(start,finish, validMove);
+  return true;
 }
 
 function KingMe (space) {
@@ -208,48 +223,67 @@ function KingMe (space) {
 }
 
 function WinCheck() {
-  var winX = true;
-  var winO = true;
+  var winUp = true;
+  var winDown = true;
   board.forEach(function(square) {
-    if (square.owner == "X") winO = false;
-    if (square.owner == "O") winX = false;
-    if (!winX && !winO) return false
-})
-  if (winX) console.log("X has won the game!!!");
-  if (winO) console.log("O has won the game!!!");
-  return true
+    if (square.owner == "X") winDown = false;
+    if (square.owner == "O") winUp = false;
+  });
+  if (winUp) alert(upPlayer, " has won the game!!!");
+  if (winDown) alert(downPlayer, " has won the game!!!");
+  return (winUp || winDown);
 }
 
-
-function Move(start, finish) {
-  var validity = MoveValidator(start,finish)
-  if (!validity[0]) {
-    console.log(validity[1]);
-    return;
-  }
+function MoveCheckers(start, finish, jumpSpace) {
   board[finish].owner = board[start].owner;
   board[finish].king = board[start].king;
   board[start].owner = " ";
   board[start].king = false;
-  if (!isNaN(validity[1])) {
-    board[validity[1]].owner=" ";
-    board[validity[1]].king=false;
+  if (jumped) {
+    board[jumpSpace].owner=" ";
+    board[jumpSpace].king=false;
   }
   KingMe(finish);
-  PrintBoard();
   UpdateBoardHTML();
-  console.log("Move completed", start, " to ", finish);
-  WinCheck()
+  var response = "Move completed: " + start + " to " + finish;
+  alert(response);
+  move=[];
+  WinCheck();
+  upPlayersTurn = !upPlayersTurn;
 }
 
+function StartFrom(start) {
+  if (board[start].owner==Mover()) {
+    move[0] = start;
+  }
+  else alert("That's not one of your checkers.");
+}
 
+function MoveTo(finish) {
+  if (board[finish].owner==" ") {
+    move[1] = finish;
+    var valid = MoveValidator();
+    if (!valid) alert("You can't move to that space. Please start over by clicking the checker you want to move.");
+  }
+  else alert("That space isn't open. Please click another destination space.");
+}
+
+function ClickSpace(space) {
+  console.log("clicked ", space)
+  if (!move[0]) StartFrom(space);
+  else MoveTo(space);
+}
 
 //test code
-
 InitializeBoard();
 UpdateBoardHTML();
 
 
+/*
+ClickSpace(9);
+ClickSpace(13);
+ClickSpace(10);
+ClickSpace(14);
 Move(13,17);
 Move(9,19);
 Move(9,21);
@@ -281,7 +315,7 @@ Move(24,31);
 Move(30,23);
 Move(32,28);
 Move(23,32);
-
+*/
 
 // Refactored Code
 
