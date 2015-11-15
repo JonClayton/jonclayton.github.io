@@ -10,20 +10,20 @@ Objects: Each useable square on board will be an object held within the board ar
 Functions: display board, and ask for/implement move.  Later, check for win, make move for computer player.
 
 Pseudocode for MVP
-build function for ASCII graphic depiction of 8x8 checkers board with ---- on unplayable spaces and open spaces have a space number along with " " or "X" or "O" to show whether they are open or occupied and by which team
+build function for ASCII graphic depiction of 8x8 checkers board with ---- on unplayable squares and open squares have a square number along with " " or "X" or "O" to show whether they are open or occupied and by which team
 - draw top line
 - draw each row
   - draw side vertical line
   - draw contents of square
     - determine whether playable square
     - get state of square from board state object
-    - format square with space number and state
+    - format square with square number and state
   - draw interior vertical line
   - repeat to complete row
   - draw side line
 - draw bottom line
 
-build array of objects to store board state (open, X or O spaces)
+build array of objects to store board state (open, X or O squares)
 - initalize with 32 objects, one for each square, by number (0 index element is a null)
 - Property: owner, with  squares 1-12 are black (X), squares 13-20 are empty (-), and squares 21-32 are red (O)
 - Property: upward moves (to higher numbers)
@@ -33,14 +33,14 @@ build function to ask for and implement move for each player
 - ask player which piece he wants to move
 - look up piece on board
   - check color
-  - based on color, check spaces it could move to
-  - check whether spaces are open
+  - based on color, check squares it could move to
+  - check whether squares are open
     - if only one, make move
     - if two open, ask which one he wants to move to
     - if none open, ask for different piece to move
   - change board to reflect outcome of move
-    - change owner of old space to nobody
-    - change owner of new space to mover
+    - change owner of old square to nobody
+    - change owner of new square to mover
 - print board
 
 - later improvements:
@@ -66,19 +66,19 @@ DONE  - visual display of board
       -  other ways to assess value of moves that I haven't thought of yet.
 
 // Initial Code
-*/
+
+ CONSOLE INTERFACE, NO LONGER NEEDED
 var hLine = "-------------------------------------------------------------------";
 
-/*  CONSOLE INTERFACE, NO LONGER NEEDED
 function SquareLineOutput(row,col,line) {
   if ((row+col)%2==0) return "-------|";
-  var space=(8-row)*4+(Math.ceil(col/2))
-  var spaceString = " " + space.toString();
-  var owner = board[space].owner
-  if (space < 10) spaceString = " "+spaceString;
-  if (line<3) spaceString = owner+owner+owner;
-  if (line==2 && board[space].king) return "  King |";
-  return owner+owner+owner+owner+spaceString+"|";
+  var square=(8-row)*4+(Math.ceil(col/2))
+  var squareString = " " + square.toString();
+  var owner = board[square].owner
+  if (square < 10) squareString = " "+squareString;
+  if (line<3) squareString = owner+owner+owner;
+  if (line==2 && board[square].king) return "  King |";
+  return owner+owner+owner+owner+squareString+"|";
 }
 
 function PrintBoard() {
@@ -96,17 +96,29 @@ function PrintBoard() {
   }
 }
 */
+// Set global variables to default values
 var board = [];
 var move = [];
 var upPlayersTurn = true;
-var jumped = false;
-var upPlayer = "X"
-var downPlayer = "O"
+var jumpedTo = false;
+var JumpedSquare = "";
+var nextJumpsAvailable = [];
+var upPlayer = "X";
+var downPlayer = "O";
 
-function Mover() {return upPlayersTurn ? upPlayer : downPlayer};
+// control alerts option for testing ease 
+var outputToScreen = true
 
-function Space (number, owner) {
-  this.name = "space" + number.toString();
+// Helper functions
+function sayToPlayer(text) {outputToScreen ? alert(text) : console.log(text)}
+function mover() {return upPlayersTurn ? upPlayer : downPlayer};
+function moverOwnsSquare(square) {return board[square].owner==mover()};
+function squareIsEmpty(square) {return board[square].owner==" "};
+function checkerIsKing(square) {return board[square].king};
+
+// Define Square objects for 32 playable squares and populated iniital board
+function Square (number, owner) {
+  this.name = "Square" + number.toString();
   this.owner = owner;
   this.upMoves = [];
   this.downMoves = [];
@@ -114,12 +126,12 @@ function Space (number, owner) {
   this.downJumps = [];
   this.king = false;
 }
-function InitializeBoard() {
-  for (space =1; space < 33; space++) {
+function initializeBoard() {
+  for (square =1; square < 33; square++) {
     var owner = " "
-    if (space < 13) owner = upPlayer;
-    if (space > 20) owner = downPlayer;
-    board[space] = new Space (space, owner);
+    if (square < 13) owner = upPlayer;
+    if (square > 20) owner = downPlayer;
+    board[square] = new Square (square, owner);
   }
   board[1].upMoves = [5];
   board[2].upMoves = [5,6];
@@ -129,9 +141,9 @@ function InitializeBoard() {
   board[6].upMoves = [10,11];
   board[7].upMoves = [11,12];
   board[8].upMoves = [12];
-  for (var space = 9; space < 29; space++) {
-    board[space].upMoves[0] = board[space-8].upMoves[0]+8;
-    if (board[space-8].upMoves[1]>0) board[space].upMoves[1] = board[space-8].upMoves[1]+8;
+  for (var square = 9; square < 29; square++) {
+    board[square].upMoves[0] = board[square-8].upMoves[0]+8;
+    if (board[square-8].upMoves[1]>0) board[square].upMoves[1] = board[square-8].upMoves[1]+8;
   }
   board[5].downMoves = [2,1];
   board[6].downMoves = [2,3];
@@ -141,9 +153,9 @@ function InitializeBoard() {
   board[10].downMoves = [5,6];
   board[11].downMoves = [6,7];  
   board[12].downMoves = [7,8];  
-  for (var space = 13; space < 33; space++) {
-    board[space].downMoves[0] = board[space-8].downMoves[0]+8;
-    if (board[space-8].downMoves[1]>0) board[space].downMoves[1] = board[space-8].downMoves[1]+8;
+  for (var square = 13; square < 33; square++) {
+    board[square].downMoves[0] = board[square-8].downMoves[0]+8;
+    if (board[square-8].downMoves[1]>0) board[square].downMoves[1] = board[square-8].downMoves[1]+8;
   }
   board[1].upJumps = [10];
   board[2].upJumps = [9,11];
@@ -153,9 +165,9 @@ function InitializeBoard() {
   board[6].upJumps = [13,15];
   board[7].upJumps = [14,16];
   board[8].upJumps = [15];
-  for (var space = 9; space < 25; space++) {
-    board[space].upJumps[0] = board[space-8].upJumps[0]+8;
-    if (board[space-8].upJumps[1]>0) board[space].upJumps[1] = board[space-8].upJumps[1]+8;
+  for (var square = 9; square < 25; square++) {
+    board[square].upJumps[0] = board[square-8].upJumps[0]+8;
+    if (board[square-8].upJumps[1]>0) board[square].upJumps[1] = board[square-8].upJumps[1]+8;
   }
   board[13].downJumps = [6];
   board[14].downJumps = [5,7];
@@ -165,21 +177,21 @@ function InitializeBoard() {
   board[10].downJumps = [1,3];
   board[11].downJumps = [2,4];  
   board[12].downJumps = [3];  
-  for (var space = 17; space < 33; space++) {
-    board[space].downJumps[0] = board[space-8].downJumps[0]+8;
-    if (board[space-8].downJumps[1]>0) board[space].downJumps[1] = board[space-8].downJumps[1]+8;
+  for (var square = 17; square < 33; square++) {
+    board[square].downJumps[0] = board[square-8].downJumps[0]+8;
+    if (board[square-8].downJumps[1]>0) board[square].downJumps[1] = board[square-8].downJumps[1]+8;
   }
 }
-
-function UpdateBoardHTML() {
-  board.forEach (function (space, index) {
+// Refresh board display in HTML
+function refreshBoardHTML() {
+  board.forEach (function (square, index) {
     var color = false
-    if (space.owner == upPlayer) color = "red";
-    if (space.owner == downPlayer) color = "black";
-    var square = document.getElementById(space.name);
+    if (square.owner == upPlayer) color = "red";
+    if (square.owner == downPlayer) color = "black";
+    var square = document.getElementById(square.name);
     if (color) console.log(square.style.background = color);
     else console.log(square.style.background = "");
-    if (space.king) {
+    if (square.king) {
       console.log(square.style.height = "4em")
       console.log(square.style.width = "4em")
       console.log(square.style.border = "0.25em solid gold")
@@ -192,130 +204,191 @@ function UpdateBoardHTML() {
   })
 }
 
-function MoveValidator() {
+// Initiate response to clicks on the board
+function clickSquare(square) {
+  console.log(square, " was clicked");
+  if (jumpedTo) jumpOnwardTo(square);
+  else move[0] ? moveTo(square) : startFrom(square);
+}
+
+// If click was initial click to start move
+function startFrom(start) {
+  if (moverOwnsSquare(start)) move[0] = start;
+  else sayToPlayer("That's not one of your checkers.");
+}
+
+// If click was second click to finish move
+function moveTo(finish) {
+  if (squareIsEmpty) {
+    move[1] = finish;
+    moveValidator();
+  }
+  else sayToPlayer("That square isn't open. Please click another destination square.");
+  return;
+}
+
+// If click was second click to continue jumping
+function jumpOnwardTo(square){
+  if (moverOwnsSquare(square)) {
+    jumpedTo = false;
+    endMove();
+    return;
+  }
+  if (nextJumpsAvailable[0].indexOf(square)>=0) {
+    move = [jumpedTo,square]
+    moveValidator();
+  }
+  else sayToPlayer("You can't continue your jump to that square.  Please click another square.")
+}
+
+// Test whether move requested is valid
+function moveValidator() {
   var start = move[0];
   var finish = move[1];
-  var validMove = false;
-  var message = ""
-  var notMover = upPlayersTurn ? downPlayer : upPlayer;
-  if (upPlayersTurn || board[start].king) {
-    board[start].upMoves.forEach(function (space) {if (space == finish) validMove=true});
-    board[start].upJumps.forEach(function (space, index) {
-      if (space == finish && board[board[start].upMoves[index]].owner==notMover) validMove=board[start].upMoves[index]});
+  var moveIdValid = false;
+  if (movesAvailable(start).indexOf(finish)>=0) {
+    jumpedTo = false;
+    moveCheckers(start,finish);
+    moveIdValid=true;
   }
-  if (!upPlayersTurn || board[start].king) {
-    board[start].downMoves.forEach(function (space) {if (space == finish) validMove=true});
-    board[start].downJumps.forEach(function (space, index) {
-      if (space == finish && board[board[start].downMoves[index]].owner==notMover) validMove=board[start].downMoves[index]});
-  }
-  if (!validMove) {
-    move = [];
-    return false;
-  }
-  jumped = typeof validMove=="number";
-  MoveCheckers(start,finish, validMove);
-  return true;
-}
-
-function KingMe (space) {
-  if (space < 5 && board[space].owner == "O") board[space].king = true;
-  if (space >27 && board[space].owner == "X") board[space].king = true;
-}
-
-function WinCheck() {
-  var winUp = true;
-  var winDown = true;
-  board.forEach(function(square) {
-    if (square.owner == "X") winDown = false;
-    if (square.owner == "O") winUp = false;
+  var jumpsResult = jumpsAvailable(start);
+  jumpsResult[0].forEach(function (jump,index) {
+    console.log(jump);
+    if (jump == finish) {
+      jumpedTo = finish;
+      moveCheckers(start,finish, jumpsResult[1][index]);
+      moveIdValid=true;
+    }
   });
-  if (winUp) alert(upPlayer, " has won the game!!!");
-  if (winDown) alert(downPlayer, " has won the game!!!");
-  return (winUp || winDown);
+  if (!moveIdValid) {
+  move = [];
+  sayToPlayer ("That is not a valid move. Please start over by clicking the checker you want to move.")
+  }
 }
 
-function MoveCheckers(start, finish, jumpSpace) {
+// Look for valid moves from specified square
+function movesAvailable(square) {
+  canMoveTo = [];
+  if (upPlayersTurn || checkerIsKing(square)) {
+    board[square].upMoves.forEach(function (moveTo) {if (squareIsEmpty(moveTo))  canMoveTo.push(moveTo)})
+  }
+  if (!upPlayersTurn || checkerIsKing(square)) {
+    board[square].downMoves.forEach(function (moveTo) {if (squareIsEmpty(moveTo))  canMoveTo.push(moveTo)})
+  }
+  return canMoveTo;
+}
+
+//  Look for valid jumps for spacified square
+function jumpsAvailable(square) {
+  var notmover = upPlayersTurn ? downPlayer : upPlayer;
+  canJumpTo = [[],[]];
+  if (upPlayersTurn || checkerIsKing(square)) {
+    board[square].upJumps.forEach(function (jumpTo, index) {
+      var jumpedOver = board[square].upMoves[index]
+      if (squareIsEmpty(jumpTo) && board[jumpedOver].owner==notmover) {
+        canJumpTo[0].push(jumpTo);
+        canJumpTo[1].push(jumpedOver);
+      }
+    })    
+  }
+  if (!upPlayersTurn || checkerIsKing(square)) {
+    board[square].downJumps.forEach(function (jumpTo, index) {
+      var jumpedOver = board[square].downMoves[index]
+      if (squareIsEmpty(jumpTo) && board[jumpedOver].owner==notmover)  {
+        canJumpTo[0].push(jumpTo);
+        canJumpTo[1].push(jumpedOver);
+      }
+    })    
+  }
+  return canJumpTo;
+}
+
+// change Square objects to reflect result of valid move and take other related steps
+function moveCheckers(start, finish, jumpedOver) {
   board[finish].owner = board[start].owner;
   board[finish].king = board[start].king;
   board[start].owner = " ";
   board[start].king = false;
-  if (jumped) {
-    board[jumpSpace].owner=" ";
-    board[jumpSpace].king=false;
+  if (jumpedTo) {
+    board[jumpedOver].owner=" ";
+    console.log("here");
+    board[jumpedOver].king=false;
+    nextJumpsAvailable = jumpsAvailable(finish);
+    console.log(nextJumpsAvailable[0].length);
+    if (nextJumpsAvailable[0].length == 0) jumpedTo=false;
+    console.log(jumpedTo);
   }
-  KingMe(finish);
-  UpdateBoardHTML();
+  kingMe(finish);
+  console.log("here");
+  refreshBoardHTML();
   var response = "Move completed: " + start + " to " + finish;
-  alert(response);
+  console.log("here");
+  sayToPlayer(response);
+  winCheck();
+  endMove();
+}
+
+function endMove() {
   move=[];
-  WinCheck();
-  upPlayersTurn = !upPlayersTurn;
+  if (!jumpedTo) upPlayersTurn = !upPlayersTurn;
 }
 
-function StartFrom(start) {
-  if (board[start].owner==Mover()) {
-    move[0] = start;
-  }
-  else alert("That's not one of your checkers.");
+// Test for piece being kinged and reflect that in Square object
+function kingMe(square) {
+  if (square < 5 && board[square].owner == downPlayer) board[square].king = true;
+  console.log("here");
+  if (square >27 && board[square].owner == upPlayer) board[square].king = true;
+  console.log(board[31].king);
 }
 
-function MoveTo(finish) {
-  if (board[finish].owner==" ") {
-    move[1] = finish;
-    var valid = MoveValidator();
-    if (!valid) alert("You can't move to that space. Please start over by clicking the checker you want to move.");
-  }
-  else alert("That space isn't open. Please click another destination space.");
+// Check whether someone has won game
+function winCheck() {
+  var winUp = true;
+  var winDown = true;
+  board.forEach(function(square) {
+    if (square.owner == upPlayer) winDown = false;
+    if (square.owner == downPlayer) winUp = false;
+  });
+  if (winUp) sayToPlayer(upPlayer, " has won the game!!!");
+  if (winDown) sayToPlayer(downPlayer, " has won the game!!!");
+  return (winUp || winDown);
 }
 
-function ClickSpace(space) {
-  console.log("clicked ", space)
-  if (!move[0]) StartFrom(space);
-  else MoveTo(space);
-}
+// test code
+initializeBoard();
+refreshBoardHTML();
+outputToScreen = false
 
-//test code
-InitializeBoard();
-UpdateBoardHTML();
+clickSquare(9);
+clickSquare(13);
+clickSquare(10);
+clickSquare(14);
+clickSquare(24);
+clickSquare(20);
+clickSquare(13);
+clickSquare(18);
+clickSquare(22);
+clickSquare(13);
+clickSquare(11);
+clickSquare(15);
+clickSquare(27);
+clickSquare(22);
+clickSquare(7);
+clickSquare(11);
+clickSquare(31);
+clickSquare(27);
+clickSquare(15);
+clickSquare(24);
+clickSquare(31);
+console.log(board[31]);
+clickSquare(22);
+clickSquare(19);
+clickSquare(31);
+clickSquare(22);
+clickSquare(22);
+clickSquare(21);
+clickSquare(17);
 
-
-/*
-ClickSpace(9);
-ClickSpace(13);
-ClickSpace(10);
-ClickSpace(14);
-Move(13,17);
-Move(9,19);
-Move(9,21);
-Move(10,14);
-Move(9,13);
-Move(22,18);
-Move(13,22);
-Move(27,18);
-Move(21,17);
-Move(30,27);
-Move(14,21);
-Move(21,30);
-Move(23,19);
-Move(30,23);
-Move(23,14);
-Move(17,13);
-Move(13,10);
-Move(6,13);
-Move(29,26);
-Move(25,21);
-Move(21,18);
-Move(14,21);
-Move(21,30);
-Move(31,27);
-Move(24,20);
-Move(11,15);
-Move(15,24);
-Move(24,31);
-Move(30,23);
-Move(32,28);
-Move(23,32);
-*/
 
 // Refactored Code
 
