@@ -188,18 +188,18 @@ function refreshBoardHTML() {
     var color = false
     if (square.owner == upPlayer) color = "red";
     if (square.owner == downPlayer) color = "black";
-    var square = document.getElementById(square.name);
-    if (color) console.log(square.style.background = color);
-    else console.log(square.style.background = "");
+    var element = document.getElementById(square.name);
+    if (color) console.log(element.style.background = color);
+    else console.log(element.style.background = "");
     if (square.king) {
-      console.log(square.style.height = "4em")
-      console.log(square.style.width = "4em")
-      console.log(square.style.border = "0.25em solid gold")
+      console.log(element.style.height = "3.5em")
+      console.log(element.style.width = "3.5em")
+      console.log(element.style.border = "0.5em solid gold")
     }
     else {
-      console.log(square.style.height = "4.5em")
-      console.log(square.style.width = "4.5em")
-      console.log(square.style.border = "0em solid black")
+      console.log(element.style.height = "4.5em")
+      console.log(element.style.width = "4.5em")
+      console.log(element.style.border = "0em solid black")
     }
   })
 }
