@@ -197,22 +197,14 @@ function refreshBoardHTML() {
     var element = document.getElementById(square.name);
     if (color) console.log(element.style.background = color);
     else console.log(element.style.background = "");
-    if (square.king) {
-      console.log(element.style.height = "3.5em")
-      console.log(element.style.width = "3.5em")
-      console.log(element.style.border = "0.5em solid gold")
-    }
-    else {
-      console.log(element.style.height = "4.5em")
-      console.log(element.style.width = "4.5em")
-      console.log(element.style.border = "0em solid black")
-    }
+    if (square.king) console.log(element.style.color = "white");
+    else console.log(element.style.color = "transparent");
   })
 }
 
 function getPlayerNames() {
   var names = [];
-  names[0] = prompt("What is the first player's name?");
+  names[0] = prompt("Welcome to my checkers game! What is the first player's name?");
   if (names[0]=="") names[0]="Nameless Human";
   names[1] = prompt("What is the second player's name? If you want to play against the computer, just hit 'OK' without a name");
   if (names[1]=="") names[1]="Shallow Blue";
@@ -220,8 +212,9 @@ function getPlayerNames() {
   // shuffle names here?
   upPlayer = names[0];
   downPlayer = names[1];
-  response = upPlayer + " will be red and move first.";
+  response = "Welcome to checkers! " + upPlayer + " will be red and move first.  You make moves in this game by clicking on the checker you want to move and then clicking on the space you are moving to.  It is " + upPlayer +"'s turn. Please move a red checker.";
   sayToPlayer(response);
+  return;
 }
 // Initiate response to clicks on the board
 function clickSquare(square) {
@@ -374,14 +367,11 @@ function winCheck() {
 }
 
 // test code
+getPlayerNames();
 initializeBoard();
 refreshBoardHTML();
-getPlayerNames();
 
 
-//sayToPlayer(name2);
-
-/*
 clickSquare(9);
 clickSquare(13);
 clickSquare(10);
@@ -410,7 +400,7 @@ clickSquare(22);
 clickSquare(22);
 clickSquare(21);
 clickSquare(17);
-*/
+
 
 
 // Refactored Code
