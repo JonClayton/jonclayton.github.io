@@ -45,19 +45,19 @@ build function to ask for and implement move for each player
 
 - later improvements:
 DONE  - jump moves
-  - additional jumps on same move if available
-  - taking turns
+DONE  - additional jumps on same move if available
+DONE  - taking turns
 DONE  - kinging and reversible movement as a result
 DONE  - visual display of board
-  - click entry to move and destination
+DONE  - click entry to move and destination
   - automatic analysis of which pieces can move and when clicked, where they can move to
   - display available moves by flashing piece, and destinations when piece is clicked
-  - AI so you can play against the computer
-    - initially, random choice among available moves
+DONE  - AI so you can play against the computer
+DONE    - initially, random choice among available moves
     - improve AI with following rules
     - avoid moving last row
     - get kinged when possible
-    - take jumps when possible
+DONE    - take jumps when possible
     - avoid moving out of unjumpable positions
     - avoid moving into jumpable positions
     - develop deeper analysis of position
@@ -115,9 +115,9 @@ var response = "";
 // Helper functions
 function mover() {return upPlayersTurn ? upPlayer : downPlayer};
 function notMover() {return upPlayersTurn ? downPlayer : upPlayer};
-function moverOwnsSquare(square) {return board[square].owner==mover()};
-function squareIsEmpty(square) {return board[square].owner==" "};
-function checkerIsKing(square) {return board[square].king};
+function moverOwnsSquare(squareNumber) {return board[squareNumber].owner==mover()};
+function squareIsEmpty(squareNumber) {return board[squareNumber].owner==" "};
+function checkerIsKing(squareNumber) {return board[squareNumber].king};
 
 function sayToPlayer(text) {
   if (outputMethod == "alert") alert(text);
@@ -136,7 +136,7 @@ function Square (number, owner) {
   this.king = false;
 }
 function initializeBoard() {
-  for (square =1; square < 33; square++) {
+  for (var square =1; square < 33; square++) {
     var owner = " "
     if (square < 13) owner = upPlayer;
     if (square > 20) owner = downPlayer;
@@ -197,10 +197,10 @@ function refreshBoardHTML() {
     var color = "";
     if (square.owner == upPlayer) color = "red";
     if (square.owner == downPlayer) color = "white";
-    var element = document.getElementById(square.name);
-    console.log(element.style.background = color);
-    if (square.king) console.log(element.style.color = "black");
-    else console.log(element.style.color = "transparent");
+    var circle = document.getElementById(square.name);
+    console.log(circle.style.background = color);
+    if (square.king) console.log(circle.style.color = "black");
+    else console.log(circle.style.color = "transparent");
   })
 }
 
@@ -210,10 +210,7 @@ function getPlayerNames() {
   names[0] = prompt("What is the first player's name?");
   if (names[0]=="") names[0]="Nameless Human";
   names[1] = prompt("What is the second player's name? If you want to play against the computer, just hit 'OK' without a name");
-  if (names[1]=="") {
-    names[1]=computerName;
-    if (brokenAI) alert("Sorry, computer AI is offline. You will have to move for the computer");
-  }
+  if (names[1]=="") names[1]=computerName;
   if (Math.random()<0.5 && names[1] != computerName) names.reverse();
   upPlayer = names[0];
   downPlayer = names[1];
@@ -253,6 +250,7 @@ function jumpOnwardTo(square){
   }
   if (nextJumpsAvailable[0].indexOf(square)>=0) {
     move = [squareJumpedTo,square]
+    squareJumpedTo=false;
     moveValidator();
   }
   else sayToPlayer("You can't continue your jump to that square.  Please click another square.")
@@ -284,7 +282,7 @@ function moveValidator() {
   }
 }
 
-// Look for valid moves from specified square
+// Look for valid move destinations from specified square
 function movesAvailable(square) {
   canMoveTo = [];
   if (upPlayersTurn || checkerIsKing(square)) {
@@ -296,11 +294,10 @@ function movesAvailable(square) {
   return canMoveTo;
 }
 
-//  Look for valid jumps for spacified square
+//  Look for valid jumps for spacified square, format is two arrays, first of valid jumps, second of the square jumped for each of them
 function jumpsAvailable(square) {
-  console.log(checkerIsKing(square));
   var canJumpTo = [[],[]];
-  var inputs = []
+  var inputs = [] // trying to be dry about messy function below that would otherwise be written twice with "ups" and then "downs"
   if (upPlayersTurn || checkerIsKing(square)) inputs.push(["upJumps","upMoves"]);
   if (!upPlayersTurn || checkerIsKing(square)) inputs.push(["downJumps","downMoves"]);
   inputs.forEach(function (input) {
