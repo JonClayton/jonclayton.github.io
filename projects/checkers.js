@@ -100,11 +100,13 @@ function PrintBoard() {
 var board = [];
 var move = [];
 var upPlayersTurn = true;
-var jumpedTo = false;
+var squareJumpedTo = false;
 var JumpedSquare = "";
 var nextJumpsAvailable = [];
-var upPlayer = "X";
-var downPlayer = "O";
+var upPlayer = "Red";
+var downPlayer = "Black";
+var computerName = "Shallow Blue";
+var brokenAI = true;
 
 // control output type among "console", "alert" or id of element and setup response storage variable
 var outputMethod = "Dialog";
@@ -112,6 +114,7 @@ var response = "";
 
 // Helper functions
 function mover() {return upPlayersTurn ? upPlayer : downPlayer};
+function notMover() {return upPlayersTurn ? downPlayer : upPlayer};
 function moverOwnsSquare(square) {return board[square].owner==mover()};
 function squareIsEmpty(square) {return board[square].owner==" "};
 function checkerIsKing(square) {return board[square].king};
@@ -191,12 +194,11 @@ function initializeBoard() {
 // Refresh board display in HTML
 function refreshBoardHTML() {
   board.forEach (function (square, index) {
-    var color = false
+    var color = "";
     if (square.owner == upPlayer) color = "red";
     if (square.owner == downPlayer) color = "black";
     var element = document.getElementById(square.name);
-    if (color) console.log(element.style.background = color);
-    else console.log(element.style.background = "");
+    console.log(element.style.background = color);
     if (square.king) console.log(element.style.color = "white");
     else console.log(element.style.color = "transparent");
   })
@@ -204,29 +206,32 @@ function refreshBoardHTML() {
 
 function getPlayerNames() {
   var names = [];
-  names[0] = prompt("Welcome to my checkers game! What is the first player's name?");
+  alert ("Welcome to my checkers game! I hope you have fun with it. Please play in a larger window if you see the board losing the eighth column--it doesn't scale perfectly into small windows.")
+  names[0] = prompt("What is the first player's name?");
   if (names[0]=="") names[0]="Nameless Human";
   names[1] = prompt("What is the second player's name? If you want to play against the computer, just hit 'OK' without a name");
-  if (names[1]=="") names[1]="Shallow Blue";
-  if (names[1]=="Shallow Blue") alert("Sorry, computer AI is offline. You will have to move for the computer");
-  // shuffle names here?
+  if (names[1]=="") {
+    names[1]=computerName;
+    alert("Sorry, computer AI is offline. You will have to move for the computer");
+  }
+  if (Math.random()<0.5 && names[1] != computerName) names.reverse();
   upPlayer = names[0];
   downPlayer = names[1];
-  response = "Welcome to checkers! " + upPlayer + " will be red and move first.  You make moves in this game by clicking on the checker you want to move and then clicking on the space you are moving to.  It is " + upPlayer +"'s turn. Please move a red checker.";
+  response = "Welcome to checkers! " + upPlayer + " will be red and move first.  You make moves in this game by clicking on the checker you want to move and then clicking on the square you are moving to.  It is " + upPlayer +"'s turn. Please move a red checker.";
   sayToPlayer(response);
+  response = "";
   return;
 }
 // Initiate response to clicks on the board
 function clickSquare(square) {
-  console.log(square, " was clicked");
-  if (jumpedTo) jumpOnwardTo(square);
+  if (squareJumpedTo) jumpOnwardTo(square);
   else move[0] ? moveTo(square) : startFrom(square);
 }
 
 // If click was initial click to start move
 function startFrom(start) {
   if (moverOwnsSquare(start)) move[0] = start;
-  else sayToPlayer("That's not one of your checkers.");
+  else sayToPlayer("That's not one of your checkers. Pick another checker.");
 }
 
 // If click was second click to finish move
@@ -242,37 +247,39 @@ function moveTo(finish) {
 // If click was second click to continue jumping
 function jumpOnwardTo(square){
   if (moverOwnsSquare(square)) {
-    jumpedTo = false;
+    squareJumpedTo = false;
     endMove();
     return;
   }
   if (nextJumpsAvailable[0].indexOf(square)>=0) {
-    move = [jumpedTo,square]
+    move = [squareJumpedTo,square]
     moveValidator();
   }
   else sayToPlayer("You can't continue your jump to that square.  Please click another square.")
 }
 
-// Test whether move requested is valid
+// Test whether move requested is valid and route to moveCheckers with right information
 function moveValidator() {
   var start = move[0];
   var finish = move[1];
-  var moveIdValid = false;
+  var moveIsNotValid = true;
   if (movesAvailable(start).indexOf(finish)>=0) {
-    jumpedTo = false;
+    squareJumpedTo = false;
     moveCheckers(start,finish);
-    moveIdValid=true;
+    moveIsNotValid=false;
   }
-  var jumpsResult = jumpsAvailable(start);
-  jumpsResult[0].forEach(function (jump,index) {
-    console.log(jump);
-    if (jump == finish) {
-      jumpedTo = finish;
-      moveCheckers(start,finish, jumpsResult[1][index]);
-      moveIdValid=true;
-    }
-  });
-  if (!moveIdValid) {
+  else {
+    var jumpsResult = jumpsAvailable(start);
+    jumpsResult[0].forEach(function (jump,index) {
+      console.log(jump);
+      if (jump == finish) {
+        squareJumpedTo = finish;
+        moveCheckers(start,finish, jumpsResult[1][index]);
+        moveIsNotValid=false;
+      }
+    });
+  };
+  if (moveIsNotValid) {
   move = [];
   sayToPlayer ("That is not a valid move. Please start over by clicking the checker you want to move.")
   }
@@ -292,26 +299,20 @@ function movesAvailable(square) {
 
 //  Look for valid jumps for spacified square
 function jumpsAvailable(square) {
-  var notmover = upPlayersTurn ? downPlayer : upPlayer;
-  canJumpTo = [[],[]];
-  if (upPlayersTurn || checkerIsKing(square)) {
-    board[square].upJumps.forEach(function (jumpTo, index) {
-      var jumpedOver = board[square].upMoves[index]
-      if (squareIsEmpty(jumpTo) && board[jumpedOver].owner==notmover) {
+  var canJumpTo = [[],[]];
+  var inputs = []
+  console.log(square);
+  if (upPlayersTurn || checkerIsKing(square)) inputs.push(["upJumps","upMoves"]);
+  if (!upPlayersTurn || checkerIsKing(square)) inputs.push(["downJumps","downMoves"]);
+  inputs.forEach(function (input) {
+    board[square][input[0]].forEach(function (jumpTo, index) {
+      var jumpedOver = board[square][input[1]][index]
+      if (squareIsEmpty(jumpTo) && board[jumpedOver].owner==notMover()) {
         canJumpTo[0].push(jumpTo);
         canJumpTo[1].push(jumpedOver);
-      }
-    })    
-  }
-  if (!upPlayersTurn || checkerIsKing(square)) {
-    board[square].downJumps.forEach(function (jumpTo, index) {
-      var jumpedOver = board[square].downMoves[index]
-      if (squareIsEmpty(jumpTo) && board[jumpedOver].owner==notmover)  {
-        canJumpTo[0].push(jumpTo);
-        canJumpTo[1].push(jumpedOver);
-      }
-    })    
-  }
+      };
+    });
+  });
   return canJumpTo;
 }
 
@@ -321,57 +322,98 @@ function moveCheckers(start, finish, jumpedOver) {
   board[finish].king = board[start].king;
   board[start].owner = " ";
   board[start].king = false;
-  if (jumpedTo) {
+  kingMe(finish);
+  if (squareJumpedTo) {
     board[jumpedOver].owner=" ";
-    console.log("here");
     board[jumpedOver].king=false;
     nextJumpsAvailable = jumpsAvailable(finish);
-    console.log(nextJumpsAvailable[0].length);
-    if (nextJumpsAvailable[0].length == 0) jumpedTo=false;
-    console.log(jumpedTo);
+    if (nextJumpsAvailable[0].length == 0) squareJumpedTo=false;
   }
-  kingMe(finish);
-  console.log("here");
   refreshBoardHTML();
-  response = "Move completed: " + start + " to " + finish;
-  console.log("here");
-  sayToPlayer(response);
-  winCheck();
-  endMove();
+  if (!winCheck()) endMove();
 }
-
-function endMove() {
-  move=[];
-  if (!jumpedTo) upPlayersTurn = !upPlayersTurn;
-}
-
 // Test for piece being kinged and reflect that in Square object
 function kingMe(square) {
-  if (square < 5 && board[square].owner == downPlayer) board[square].king = true;
-  console.log("here");
-  if (square >27 && board[square].owner == upPlayer) board[square].king = true;
-  console.log(board[31].king);
+  if (square < 5 && board[square].owner == downPlayer) {
+    board[square].king = true;
+    response += downPlayer +" got a king! Congratulations! ";
+  }
+  if (square >27 && board[square].owner == upPlayer) {
+    board[square].king = true;
+    response += upPlayer +" got a king! Congratulations! ";
+  }
 }
 
 // Check whether someone has won game
 function winCheck() {
-  var winUp = true;
-  var winDown = true;
+  var win = true;
   board.forEach(function(square) {
-    if (square.owner == upPlayer) winDown = false;
-    if (square.owner == downPlayer) winUp = false;
+    if (square.owner == notMover()) win = false;
   });
-  if (winUp) sayToPlayer(upPlayer, " has won the game!!!");
-  if (winDown) sayToPlayer(downPlayer, " has won the game!!!");
-  return (winUp || winDown);
+  if (win) {
+    response = mover() + " has won the game!!!";
+    sayToPlayer(response);
+  }
+  console.log("Win?", win);
+  return win;
 }
 
-// test code
+function endMove() {
+  move=[];
+  if (squareJumpedTo) response += "You jumped a checker and can continue jumping.  If you wish to do so, click the square your next just takes you to. If you don't want to make that jump, just click any one of your pieces.";
+  else {
+    response += "Move completed for " + mover() + ". It is " + notMover() + "'s turn."
+    upPlayersTurn = !upPlayersTurn;
+    if (mover() == computerName && brokenAI) {
+      response += " AI is offline--please move for the computer."
+      sayToPlayer(response);
+      response = "";
+    }
+    else { 
+      sayToPlayer(response);
+      response = "";
+      if (mover()==computerName) getComputerMove();
+    }
+  }
+}
+/////  Computer AI work in progress
+function getComputerMove() {
+  var jumpOptions = [], moveOptions = [], move = "";
+  board.forEach (function (square) {
+    if (square.owner == computerName) {
+       var result = jumpsAvailable(square);
+       if (result.length >0) {
+        result[0].forEach (function (jump,index) {
+        jumpOptions.push([square, jump, result[1][index]]);
+      });
+      }
+      result = movesAvailable(square);
+      if (result.length >0) {
+        result.forEach (function (finish) {
+        jumpOptions.push([square, finish]);
+      });
+      }
+    }
+  });
+  if (jumpOptions.length > 0) {
+    move = randomPickFromArray(jumpOptions);
+    squareJumpedTo = move[1];
+  }
+  else move = randomPickFromArray(moveOptions);
+  console.log(move);
+  moveCheckers (move[0], move[1], move[2]);
+}
+
+function randomPickFromArray(array) {
+  return array[Math.floor(Math.random()*array.length)];
+}
+
 getPlayerNames();
 initializeBoard();
 refreshBoardHTML();
 
-
+// test code
+/*
 clickSquare(9);
 clickSquare(13);
 clickSquare(10);
@@ -400,8 +442,7 @@ clickSquare(22);
 clickSquare(22);
 clickSquare(21);
 clickSquare(17);
-
-
+*/
 
 // Refactored Code
 
