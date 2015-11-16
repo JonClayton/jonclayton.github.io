@@ -20,10 +20,21 @@ button {
 .board {
 	background-color: white;
 	display: inline-block;
-	width: auto;
+	width: 50%;
 	height: auto;
 	padding: 2px;
 	border: 2px black solid;
+}
+
+#Dialog {
+	background-color: white;
+	border: black 3px solid;
+	display: fixed;
+	float: right;
+	right: 3px;
+	top: 3px;
+	width: 40%;
+	height: 60%;
 }
 
 .row {

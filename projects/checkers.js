@@ -106,15 +106,21 @@ var nextJumpsAvailable = [];
 var upPlayer = "X";
 var downPlayer = "O";
 
-// control alerts option for testing ease 
-var outputToScreen = true
+// control output type among "console", "alert" or id of element and setup response storage variable
+var outputMethod = "Dialog";
+var response = "";
 
 // Helper functions
-function sayToPlayer(text) {outputToScreen ? alert(text) : console.log(text)}
 function mover() {return upPlayersTurn ? upPlayer : downPlayer};
 function moverOwnsSquare(square) {return board[square].owner==mover()};
 function squareIsEmpty(square) {return board[square].owner==" "};
 function checkerIsKing(square) {return board[square].king};
+
+function sayToPlayer(text) {
+  if (outputMethod == "alert") alert(text);
+  else if (outputMethod == "console") console.log(text);
+  else document.getElementById(outputMethod).innerHTML = text;
+}
 
 // Define Square objects for 32 playable squares and populated iniital board
 function Square (number, owner) {
@@ -204,6 +210,19 @@ function refreshBoardHTML() {
   })
 }
 
+function getPlayerNames() {
+  var names = [];
+  names[0] = prompt("What is the first player's name?");
+  if (names[0]=="") names[0]="Nameless Human";
+  names[1] = prompt("What is the second player's name? If you want to play against the computer, just hit 'OK' without a name");
+  if (names[1]=="") names[1]="Shallow Blue";
+  if (names[1]=="Shallow Blue") alert("Sorry, computer AI is offline. You will have to move for the computer");
+  // shuffle names here?
+  upPlayer = names[0];
+  downPlayer = names[1];
+  response = upPlayer + " will be red and move first.";
+  sayToPlayer(response);
+}
 // Initiate response to clicks on the board
 function clickSquare(square) {
   console.log(square, " was clicked");
@@ -321,7 +340,7 @@ function moveCheckers(start, finish, jumpedOver) {
   kingMe(finish);
   console.log("here");
   refreshBoardHTML();
-  var response = "Move completed: " + start + " to " + finish;
+  response = "Move completed: " + start + " to " + finish;
   console.log("here");
   sayToPlayer(response);
   winCheck();
@@ -357,8 +376,12 @@ function winCheck() {
 // test code
 initializeBoard();
 refreshBoardHTML();
-outputToScreen = false
+getPlayerNames();
 
+
+//sayToPlayer(name2);
+
+/*
 clickSquare(9);
 clickSquare(13);
 clickSquare(10);
@@ -380,7 +403,6 @@ clickSquare(27);
 clickSquare(15);
 clickSquare(24);
 clickSquare(31);
-console.log(board[31]);
 clickSquare(22);
 clickSquare(19);
 clickSquare(31);
@@ -388,6 +410,7 @@ clickSquare(22);
 clickSquare(22);
 clickSquare(21);
 clickSquare(17);
+*/
 
 
 // Refactored Code
