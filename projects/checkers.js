@@ -321,13 +321,13 @@ function moveCheckers(start, finish, jumpedOver) {
   board[finish].king = board[start].king;
   board[start].owner = " ";
   board[start].king = false;
-  kingMe(finish);
   if (squareJumpedTo) {
     board[jumpedOver].owner=" ";
     board[jumpedOver].king=false;
     nextJumpsAvailable = jumpsAvailable(finish);
     if (nextJumpsAvailable[0].length == 0) squareJumpedTo=false;
   }
+  kingMe(finish);
   refreshBoardHTML();
   if (!winCheck()) endMove();
 }
@@ -350,7 +350,7 @@ function winCheck() {
     if (square.owner == notMover()) win = false;
   });
   if (win) {
-    response = mover() + " has won the game!!!";
+    response = mover() + " has won the game by jumping all the opposing checkers!!!";
     sayToPlayer(response);
   }
   return win;
@@ -384,7 +384,7 @@ function endMove() {
 function getComputerMove() {
   var jumpOptions = [], moveOptions = [], move = "";
   board.forEach (function (square, squareNumber) {
-    if (square.owner == computerName) {
+    if (square.owner == mover()) {
        var result = jumpsAvailable(squareNumber);
        if (result.length >0) {
         result[0].forEach (function (jump,index) {
@@ -399,14 +399,17 @@ function getComputerMove() {
       }
     }
   });
-  console.log(jumpOptions);
   if (jumpOptions.length > 0) {
     move = randomPickFromArray(jumpOptions);
     squareJumpedTo = move[1];
   }
   else move = randomPickFromArray(moveOptions);
-  console.log(move, squareJumpedTo);
-  moveCheckers (move[0], move[1], move[2]);
+  if (move==undefined) {
+    response = mover() + " has lost because there are no legal moves available!"
+    sayToPlayer(response);
+  }
+  if (mover() == computerName) moveCheckers (move[0], move[1], move[2]);
+  else return;
 }
 
 function randomPickFromArray(array) {
