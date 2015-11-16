@@ -106,7 +106,7 @@ var nextJumpsAvailable = [];
 var upPlayer = "Red";
 var downPlayer = "Black";
 var computerName = "Shallow Blue";
-var brokenAI = true;
+var brokenAI = false;
 
 // control output type among "console", "alert" or id of element and setup response storage variable
 var outputMethod = "Dialog";
@@ -212,7 +212,7 @@ function getPlayerNames() {
   names[1] = prompt("What is the second player's name? If you want to play against the computer, just hit 'OK' without a name");
   if (names[1]=="") {
     names[1]=computerName;
-    alert("Sorry, computer AI is offline. You will have to move for the computer");
+    if (brokenAI) alert("Sorry, computer AI is offline. You will have to move for the computer");
   }
   if (Math.random()<0.5 && names[1] != computerName) names.reverse();
   upPlayer = names[0];
@@ -271,7 +271,6 @@ function moveValidator() {
   else {
     var jumpsResult = jumpsAvailable(start);
     jumpsResult[0].forEach(function (jump,index) {
-      console.log(jump);
       if (jump == finish) {
         squareJumpedTo = finish;
         moveCheckers(start,finish, jumpsResult[1][index]);
@@ -299,9 +298,9 @@ function movesAvailable(square) {
 
 //  Look for valid jumps for spacified square
 function jumpsAvailable(square) {
+  console.log(checkerIsKing(square));
   var canJumpTo = [[],[]];
   var inputs = []
-  console.log(square);
   if (upPlayersTurn || checkerIsKing(square)) inputs.push(["upJumps","upMoves"]);
   if (!upPlayersTurn || checkerIsKing(square)) inputs.push(["downJumps","downMoves"]);
   inputs.forEach(function (input) {
@@ -354,13 +353,18 @@ function winCheck() {
     response = mover() + " has won the game!!!";
     sayToPlayer(response);
   }
-  console.log("Win?", win);
   return win;
 }
 
 function endMove() {
   move=[];
-  if (squareJumpedTo) response += "You jumped a checker and can continue jumping.  If you wish to do so, click the square your next just takes you to. If you don't want to make that jump, just click any one of your pieces.";
+  if (squareJumpedTo) {
+    response += "You jumped a checker and can continue jumping.  If you wish to do so, click the square your next jump takes you to. If you don't want to make that jump, just click any one of your pieces.";
+    if (mover()==computerName) {
+      move = [squareJumpedTo,nextJumpsAvailable[0]];
+      moveValidator();
+    }
+  }
   else {
     response += "Move completed for " + mover() + ". It is " + notMover() + "'s turn."
     upPlayersTurn = !upPlayersTurn;
@@ -379,28 +383,29 @@ function endMove() {
 /////  Computer AI work in progress
 function getComputerMove() {
   var jumpOptions = [], moveOptions = [], move = "";
-  board.forEach (function (square) {
+  board.forEach (function (square, squareNumber) {
     if (square.owner == computerName) {
-       var result = jumpsAvailable(square);
+       var result = jumpsAvailable(squareNumber);
        if (result.length >0) {
         result[0].forEach (function (jump,index) {
-        jumpOptions.push([square, jump, result[1][index]]);
+        jumpOptions.push([squareNumber, jump, result[1][index]]);
       });
       }
-      result = movesAvailable(square);
+      result = movesAvailable(squareNumber);
       if (result.length >0) {
         result.forEach (function (finish) {
-        jumpOptions.push([square, finish]);
+        moveOptions.push([squareNumber, finish]);
       });
       }
     }
   });
+  console.log(jumpOptions);
   if (jumpOptions.length > 0) {
     move = randomPickFromArray(jumpOptions);
     squareJumpedTo = move[1];
   }
   else move = randomPickFromArray(moveOptions);
-  console.log(move);
+  console.log(move, squareJumpedTo);
   moveCheckers (move[0], move[1], move[2]);
 }
 
