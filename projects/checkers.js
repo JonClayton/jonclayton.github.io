@@ -451,12 +451,20 @@ clickSquare(17);
 
 
 
-// Reflection
-//
-//
-//
-//
-//
+/* Reflection
+####What was the most difficult part of this challenge?
+Keeping things in small enough bites to be able to run without too much troubleshooting each time I changed.
+
+####What did you learn about creating objects and functions that interact with one another?
+Quite a bit.  This was a much more involved program than those I had written before.
+
+####Did you learn about any new built-in methods you could use in your refactored solution? If so, what were they and how do they work?
+Of course.  I had no idea how to display things on screen by changing HTML, or interact with the user via 'prompt', for example
+
+####How can you access and manipulate properties of objects?
+In brackets or if the property name is a valid variable, preceded by a period.  I also do some variables to capture property names.
+
+
 //
 //
 //
