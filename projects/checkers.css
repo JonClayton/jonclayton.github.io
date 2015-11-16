@@ -8,6 +8,13 @@ You can add them using a name (for common names), Hex, or RGB values.
 	border: 0px;
 }
 
+.codeline {
+	font-size: large;
+	position: fixed;
+	right: 3px;
+	bottom: 3px;
+}
+
 body {
   background-color: blue;
 }
