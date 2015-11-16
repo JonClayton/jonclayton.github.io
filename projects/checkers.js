@@ -221,6 +221,7 @@ function getPlayerNames() {
 }
 // Initiate response to clicks on the board
 function clickSquare(square) {
+  console.log(move);
   if (squareJumpedTo) jumpOnwardTo(square);
   else move[0] ? moveTo(square) : startFrom(square);
 }
@@ -354,32 +355,46 @@ function winCheck() {
 }
 
 function endMove() {
-  move=[];
   if (squareJumpedTo) {
-    response += "You jumped a checker and can continue jumping.  If you wish to do so, click the square your next jump takes you to. If you don't want to make that jump, just click any one of your pieces.";
     if (mover()==computerName) {
       move = [squareJumpedTo,nextJumpsAvailable[0]];
       moveValidator();
     }
+    else sayToPlayer("You jumped a checker and can continue jumping.  If you wish to do so, click the square your next jump takes you to. If you don't want to make that jump, just click any one of your pieces.");
   }
   else {
     response += "Move completed for " + mover() + ". It is " + notMover() + "'s turn."
-    upPlayersTurn = !upPlayersTurn;
-    if (mover() == computerName && brokenAI) {
-      response += " AI is offline--please move for the computer."
+    sayToPlayer(response);
+    response = "";
+    upPlayersTurn = !upPlayersTurn
+    if (mover()==computerName) getComputerMove();
+    var test = getAllOptionsAvailable();
+    if (test[0].length==0 && test[1].length==0) {
+      response = mover() + " loses since no move is available!!";
       sayToPlayer(response);
-      response = "";
-    }
-    else { 
-      sayToPlayer(response);
-      response = "";
-      if (mover()==computerName) getComputerMove();
     }
   }
+  move = [];
 }
 /////  Computer AI work in progress
 function getComputerMove() {
-  var jumpOptions = [], moveOptions = [], move = "";
+  var options = getAllOptionsAvailable();
+  console.log(options);
+  var pickedMove = []
+  if (options[0].length > 0) {
+    pickedMove = randomPickFromArray(options[0]);
+    squareJumpedTo = pickedMove[1];
+  }
+  else pickedMove = randomPickFromArray(options[1]);
+  if (pickedMove==undefined) {
+    response = mover() + " has lost because there are no legal moves available!"
+    sayToPlayer(response);
+  }
+  if (mover() == computerName) moveCheckers (pickedMove[0], pickedMove[1], pickedMove[2]);
+}
+function getAllOptionsAvailable() {
+  var jumpOptions = []; 
+  var moveOptions = [];
   board.forEach (function (square, squareNumber) {
     if (square.owner == mover()) {
        var result = jumpsAvailable(squareNumber);
@@ -396,17 +411,8 @@ function getComputerMove() {
       }
     }
   });
-  if (jumpOptions.length > 0) {
-    move = randomPickFromArray(jumpOptions);
-    squareJumpedTo = move[1];
-  }
-  else move = randomPickFromArray(moveOptions);
-  if (move==undefined) {
-    response = mover() + " has lost because there are no legal moves available!"
-    sayToPlayer(response);
-  }
-  if (mover() == computerName) moveCheckers (move[0], move[1], move[2]);
-  else return;
+//  if (jumpOptions.length==0 && moveOptions.length==0) return undefined
+  return [jumpOptions,moveOptions]
 }
 
 function randomPickFromArray(array) {
