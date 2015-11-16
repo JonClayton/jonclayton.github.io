@@ -64,7 +64,7 @@ button {
 }
 
 .square1 {
-	background-color: #b3b3b3;
+	background-color: green;
 	display: inline-block;
 	position: relative;
 	width: 11%;
@@ -72,7 +72,7 @@ button {
 }
 
 .square {
-	background-color: white;
+	background-color: #F0DC82;
 	display: inline-block;
 	position: relative;
 	width: 11%;

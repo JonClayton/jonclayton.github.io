@@ -104,7 +104,7 @@ var squareJumpedTo = false;
 var JumpedSquare = "";
 var nextJumpsAvailable = [];
 var upPlayer = "Red";
-var downPlayer = "Black";
+var downPlayer = "White";
 var computerName = "Shallow Blue";
 var brokenAI = false;
 
@@ -196,10 +196,10 @@ function refreshBoardHTML() {
   board.forEach (function (square, index) {
     var color = "";
     if (square.owner == upPlayer) color = "red";
-    if (square.owner == downPlayer) color = "black";
+    if (square.owner == downPlayer) color = "white";
     var element = document.getElementById(square.name);
     console.log(element.style.background = color);
-    if (square.king) console.log(element.style.color = "white");
+    if (square.king) console.log(element.style.color = "black");
     else console.log(element.style.color = "transparent");
   })
 }
