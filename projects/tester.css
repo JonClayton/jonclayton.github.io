@@ -12,5 +12,9 @@ body {
 }
 
 #some-div:hover #some-element {
+  position: absolute;
   display: block;
+  left: 10%;
+  top:10%;
+  background-color: white;
 }
