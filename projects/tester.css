@@ -9,6 +9,8 @@ body {
   margin-top: 10px;
   padding: 5px;
   text-transform: uppercase;
+  width: 50%;
+  height: auto;
 }
 
 #some-div:hover #some-element {
