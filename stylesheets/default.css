@@ -1,9 +1,4 @@
 h1 {
-<<<<<<< HEAD
-=======
-	border-color: red;
-	border-width: 1px;
->>>>>>> cleanup
 	font-family: Verdana;
 	font-size: 4em;
 	font-weight: bold;
@@ -11,11 +6,6 @@ h1 {
 }
 
 nav {
-<<<<<<< HEAD
-=======
-	border-color: red;
-	border-width: 1px;
->>>>>>> cleanup
 	display: block;
 	width: 20%;
 	float: left;
@@ -23,24 +13,12 @@ nav {
 }
 
 nav>div {
-<<<<<<< HEAD
-=======
-	border-color: red;
-	border-width: 1px;
->>>>>>> cleanup
 	display: block;
 	float left;
 	text-align: left;
-	;
-
 }
 
 .photos {
-<<<<<<< HEAD
-=======
-	border-color: red;
-	border-width: 1px;
->>>>>>> cleanup
 	top: 20%;
 	position: relative;
 	display: block;
@@ -48,31 +26,16 @@ nav>div {
 }
 
 .links {
-<<<<<<< HEAD
-=======
-	border-color: red;
-	border-width: 1px;
->>>>>>> cleanup
 	display: block;
 	float: right;
 }
 
 a:hover {
-<<<<<<< HEAD
-=======
-	border-color: red;
-	border-width: 1px;
->>>>>>> cleanup
 	color: blue;
 	font-weight: bold;
 }
 
 footer {
-<<<<<<< HEAD
-=======
-	border-color: red;
-	border-width: 1px;
->>>>>>> cleanup
 	position: fixed;
 	bottom: 0%;
 	width: 50%;
@@ -82,11 +45,6 @@ footer {
 }
 
 .side-links {
-<<<<<<< HEAD
-=======
-	border-color: red;
-	border-width: 1px;
->>>>>>> cleanup
 	position: fixed;
 	right: 0%;
 	margin: 3%;
@@ -94,12 +52,11 @@ footer {
 }
 
 article {
-<<<<<<< HEAD
-=======
-	border-color: red;
-	border-width: 1px;
->>>>>>> cleanup
 	margin: 3%;
 	width: 60%;
 	left: 5%;
+}
+
+p {
+	font-size: large;
 }
