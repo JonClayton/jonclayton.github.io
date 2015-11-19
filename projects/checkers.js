@@ -335,7 +335,7 @@ function kingMe(square) {
     board[square].king = true;
     response += downPlayer +" got a king! Congratulations! ";
   }
-  if (square >27 && board[square].owner == upPlayer) {
+  if (square >28 && board[square].owner == upPlayer) {
     board[square].king = true;
     response += upPlayer +" got a king! Congratulations! ";
   }
