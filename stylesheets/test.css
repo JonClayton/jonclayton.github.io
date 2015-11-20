@@ -1,0 +1,82 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: black;
+}
+
+.Area {
+	background-color: green;
+	display: inline-block;
+	margin: 0px;
+	border-width: 1.3em;
+	border-style: solid;
+	border-color: black;
+}
+
+#Area_1 {
+	position: relative;
+	left: 22%;
+	width: 78%;
+	padding-bottom: 8%;
+	background-color: #DED5D0;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+}
+
+#relative_container {
+	position: relative;
+	left: 22%;
+	padding-bottom: 100%;
+	background-color: #D2A520;
+}
+
+#Area_2 {
+	display: block;
+	position: fixed;
+	top: 0;
+	width: 22%;
+	padding-bottom: 100%;
+	background-color: #8B1820;
+	border-left: none;
+	border-top: none;
+	border-bottom: none;
+}
+
+#Area_3 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 52%;
+	padding-bottom: 200%;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-top: 1em;
+	background-color: #D2A520;
+	border: none;
+}
+
+#Area_4 {
+	position: absolute;
+	right:0;
+	top: 0;
+	width: 44%;
+	padding-bottom: 200%;
+	background-color: #43437A;
+	border-right: none;
+	border-top: none;
+	border-bottom: none;
+}
+
+#Area_5 {
+	position: fixed;
+	bottom: 0%;
+	left: 0%;
+	width: 77%;
+	border-width: 1.3em;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+	padding-bottom: 5%;
+	background-color: #DED5D0;
+}
