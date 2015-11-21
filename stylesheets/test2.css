@@ -1,0 +1,100 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: black;
+}
+
+p {
+}
+
+header {
+	display: block;
+	position: fixed;
+	left: 22%;
+	width: 100%;
+	border-bottom: 4vh black solid;
+	height: 12vh;
+	background-color: #DED5D0; 
+	z-index: 3;
+}
+
+#Area_1 {
+	position: absolute;
+	font-family: Tangerine;
+	font-weight: 700;
+    font-style: normal;
+    font-size: 11vh;
+	background-color: #DED5D0; 
+	z-index: 3;
+}
+
+#Area_2 {
+	display: block;
+	position: fixed;
+	top: 0;
+	width: 20%;
+	height: 93vh;
+	background-color: #8B1820;
+	z-index: 2;
+}
+
+#Jon_photo {
+	width: 80%;
+	height: auto;
+	margin: 10%;
+}
+
+nav {
+	margin: 2%;
+}
+
+a {
+	color: #DED5D0;
+}
+
+#Area_3 {
+	display: block;
+	position: fixed;
+	top: 15%;
+	left: 22%;
+	width: 54%;
+	height: 78vh;
+	padding-left: 1%;
+	padding-right: 1%;
+	background-color: #D2A520;
+	z-index: 1;
+}
+
+iframe {
+	background-color: #D2A520;
+	border: none;
+	width: 100%;
+	height: 78vh;
+	z-index: 0;
+}
+
+#Area_4 {
+	position: fixed;
+	right: 0;
+	top: 15%;
+	width: 20%;
+	padding-bottom: 200%;
+	z-index: 2;
+	background-color: #43437A;
+}
+
+#Area_5 {
+	position: fixed;
+	bottom: 0%;
+	left: 0%;
+	width: 78%;
+	height: 5vh;
+	border-top: solid;
+	background-color: #DED5D0;
+	z-index: 3;
+	border-top: black 4vh solid;
+}
+
+footer {
+	position: absolute;
+}
