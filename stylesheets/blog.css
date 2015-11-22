@@ -2,3 +2,21 @@
 .blog-text {
 	font-family: 'Rambla', sans-serif;
 }
+
+#Area_3 {
+	width: 56%;
+}
+
+#Area_4 {
+	width: 16%;
+}
+
+#Area_5 {
+	width: 80%;
+}
+
+footer {
+	position: absolute;
+	padding-left: 5%;
+	line-height: 5vh;
+}
