@@ -1,62 +1,49 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>The Big O--not quite what you may think</title>  
-    <meta charset="UTF-8">
-    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-    <link rel="stylesheet" type="text/css" href="../stylesheets/default.css">
-    <link rel="stylesheet" type="text/css" href="../stylesheets/blog.css">
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Tangerine:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="../stylesheets/test2.css">
+	<meta charset="UTF-8">
+    <title>The Big O--not quite what you may think</title>
+</head>
 
 
-  <body>
-    <img alt="My Logo" src="../imgs/Jon-photo.jpeg" width="218" height="218">
-    <header class="blog-header">
-      <div class="blog-header">
-      <h1>A Blog Too Far</h1>
-      <h2>The Big O--not quite what you may think</h2>
-      <h3>19 November 2015</h3>
-        <ul>
-            <li> <a href="http://jonclayton.github.io/blog/Index.html" > Home </a> </li>
-            <li> <a href="index.html" > View Blog </a> </li>
-            <li> <a href="../about-me.html" > About Me </a> </li>
-            <li> <a href="https://github.com/JonClayton" > GitHub </a> </li>
-            <li> <a href="../sitemap.html" > Other </a> </li>
-        </ul>
-      </div>
-    </header>
-    <section class="blog-text">
-          <p>Okay, I have to confess that when I saw the topic "The Big O", the first thought that crossed my mind was that the topic is NSFW.  Then shortly after came this guy:</p>
-          <img alt= "Oscar Robertson signed card" src="https://c1.staticflickr.com/5/4011/4371181087_1bdc17e644_z.jpg?zz=1">
-          <p>Oscar Robertson, nicknamed "The Big O", was the only player in NBA history to <strong>average</strong> a triple-double over a whole season (ten-plus points, rebounds and assists), and he actually averaged that over the first five seasons of his career. He was probably the greatest basketball player ever under 6'6". Like baseball's Curt Flood, he was also the plaintiff is a lawsuit that brought down restrictions on player movement and led to dramatic increases in player salaries. But I digress.</p>
-          <p>But the first listed thing in Google for "Big O" isn't either la petite mort or an NBA Hall of Famer.  It's Big O's Golf and Big O's Crawfish here in Houston--dang Google knowing where I live!  Again, not what they are looking for. Time to try Wikipedia:</p>
-          <img alt= "Big O Wikipedia screenshot" src="../imgs/Big_O_Anime">
-          <p>Not it, and far less interesting to me than the previous two Big O's. But the disambiguation link is promising, and after seeing a Shel Silverstein book <a href="http://www.amazon.com/Missing-Piece-Meets-Big/dp/0060256575">The Missing Piece Meets the Big O</a>, Barack Obama (who knew?!), the greek letter Omega (&Omega), and the world's largest centerless Ferris wheel, whatever that means, we come to what we're supposed to be discussing: "time complexity in comptuer science."</p>
-          <p>This is actually a meaningful topic to me this week because while building my game last week (a working version of checkers found here: <a href="http://jonclayton.github.io/projects/checkers.html"></a>, I started to ponder the AI needed to make the computer moves. I started to think about recursively looking at the possible future moves, but it seemed clear the number of possible moves might expand so dramatically the computer couldn't handle them. A computer can easily "solve" tic-tac-toe by anticipating all possible outcomes. Not so for Go or chess, and probably a real challenge for checkers.  So does this Big O have something to do with that? Let's find out!</p>
-          <p>Here's two relevant Wikipedia entries:</p>
-          <ul><li><a href="https://en.wikipedia.org/wiki/Big_O_notation">Big O Notation</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Analysis_of_algorithms">Analysis of Algorithms</a></li>
-          </ul>
-          <p>These articles are full of number theory and stuff that I'd only ask a math major to understand, much less explain. So here's a much more accessible article, written to help you be knowledgeable enough about Big O to make it through an interview: <a href="https://www.interviewcake.com/article/big-o-notation-time-and-space-complexity">Big O Notation: Using not-boring math to measure code's efficiency</a>. I think this is actually worth reading, it's fairly accessible, but I'm going to give a shot at a summary.</p>
-          <h3>The Big (O) Finis!</h3>
-          <p>Big O notation lets us express, in very simple terms, just how fast a function is growing. This is useful in computing because we often ask the computer to do things that take increasing amounts of time and/or memory as the list of inputs gets larger. First let's talk about the math and then we'll talk about some code.</p>
-          <p>Big O is really a big simplification. The growth rate of a function, as the variable x gets very large, depends only on the part of the function that is growing the fastest.  Since x^4 grows faster than x^2 (dramatically so for large values of x), a function that includes both of them really only grows at the speed of the fastest growing element.  And coefficients don't matter either: 6*x^4 doesn't grow any faster than x^4. What Big O notation tells us to do is describe the growth rate of a function as just the simple version of its fastest growing component.  So the growth rate of 4*x^3+2*x^2+800000*x+32 is just O(x^3).  You'd say that function runs in Big O of x^3 time.</p>
-          <p>If you don't just accept the math above, let's talk about it a little.  Growth rate can be expressed as the value for n+1 divided by the value for n (if you subtracted one from this you would have the percent growth, right?).  So if the function is just a*x+b, your growth would be (a*(n+1)+b)/(a*n+b), which is (a*n+a+b)/(a*n+b).  As n gets very large, the terms that don't have an n in them won't make much difference, so you have a*n/(a*n), and both the   </p>
+<body>
+	<header><div id="Area_1">A Blog Too Far: 21 November 2015
+	</div>
+	</header>
+	<div class="Area" id="Area_2">
+		<div id="Jon_photo"><img src="imgs/Jon-photo.jpeg" width="100%" height= "auto" alt="Jon's Photo"></div>
 
-      </section>
+		<nav>
+	    	<div><a href="index.html" > Home</a></div>
+	    	<div><a href="blog/index.html" >A Blog Too Far</a></div>
+	    	<div><a href="prof-info.html" > Professional Information</a></div>
+	    	<div><a href="about-me.html" > About Me</a></div>
+	    	<div><a href="links.html" > Links</a></div>
+	    	<div><a href="contact.html" > Contact information</a></div>
+	    	<div><a href="resume.html" > Resume</a></div>
+	    	<div><a href="projects/projects.html" > Projects</a></div>
+		</nav>
+		
+	</div><div class="Area" id="Area_3"><iframe src="tech.html"></iframe>
 
-      <aside class="side-links">
-        <ul>
-            <li><a href="Javascript.html">These are not the <strike>droids</strike> methods you're looking for</a></li>
-            <li> <a href="ruby-classes.html" >Working Class Dog </a> </li>   
-            <li> <a href="index.html" > Blog Archive</a> </li> 
-        </ul>
-      </aside>
-    <aside class="bottom-links">
-      <ul>
-        <li> <a href="comments for blog link" > Comments</a>
-        <li> <a href="share on Facebook link" > Share on Facebook</a>
-        <li> <a href="comments for blog link" > Share on Twitter</a>         
-      </ul>
-    </aside>
-  </body>
-  </html>
+	</div><div class="Area" id="Area_4">
+            <a href="Javascript.html">These are not the <strike>droids</strike> methods you're looking for</a>
+
+            <a href="ruby-classes.html" >Working Class Dog </a>
+            
+            <a href="index.html" > Blog Archive</a>
+	</div>
+
+	</div><div class="Area" id="Area_5">
+		<footer>
+		Copyright 2015 by Jonathan B. Clayton 
+		</footer>
+	
+	</div><div class="Area" id="Area_6">
+	
+	</div><div class="Area" id="Area_7">
+	</div>		
+</body>
+</html>
