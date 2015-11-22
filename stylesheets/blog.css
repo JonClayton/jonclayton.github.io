@@ -8,8 +8,10 @@
 }
 
 #Area_4 {
-	line-height: 4vh;
 	width: 21%;
+}
+#Area_4 div {
+	line-height: 4vh;
 }
 
 #Area_5 {
