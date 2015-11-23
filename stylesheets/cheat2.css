@@ -23,6 +23,7 @@ section {
 	display: inline-block;
 	margin-top: 0.5vh;
 	background-color: blue;
+	padding-bottom: 0.5vh;
 }
 
 iframe {
