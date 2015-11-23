@@ -4,15 +4,16 @@
 }
 
 h1 {
-	width: 50%;
-	margin: auto;
+	text-align: center;
+	width: 100%;
 }
 
 h2 {
 	font-size: normal;
 }
 
-h3 {
+h4 {
+	color: white;
 }
 
 section {
