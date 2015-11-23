@@ -1,0 +1,31 @@
+* {
+	margin: 0;
+	font-family: 'Alegreya', serif;
+}
+
+h1 {
+	width: 50%;
+	margin: auto;
+}
+
+h2 {
+	font-size: large;
+}
+
+section {
+	position: relative;
+	margin-left: 0.5%;
+	padding-left: 2px;
+	width: 13%;
+	display: inline-block;
+	margin-top: 0.5vh;
+	background-color: blue;
+}
+
+iframe {
+	display: block;
+	width: 97%;
+	height: 77vh;
+	padding: 1%;
+	background-color: white;
+}
