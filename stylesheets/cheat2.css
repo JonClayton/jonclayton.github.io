@@ -12,6 +12,9 @@ h2 {
 	font-size: normal;
 }
 
+h3 {
+}
+
 section {
 	position: relative;
 	margin-left: 0.5%;
@@ -25,7 +28,15 @@ section {
 iframe {
 	display: block;
 	width: 97%;
-	height: 74vh;
+	height: 79vh;
 	padding: 1%;
 	background-color: white;
+}
+
+select {
+	width: 10%;
+	position: absolute;
+	display: inline-block;
+	top: 2px;
+	right: 2px;
 }
