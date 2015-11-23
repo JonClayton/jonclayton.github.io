@@ -12,12 +12,12 @@
 	<header><h1>Jon's Cheat-Sheet to Cheat-Sheets</h1></header>
 
 	<section>
-		<h2>Ruby Basics</h2>
+		<h3>Ruby Basics</h3>
 			<select id="rubyBasics" onchange="rubyBasics()">
   				<option value="">Pick one
   				<option value="ZenSpider">ZenSpider's cheat sheet
   				<option value="Digilife">Digilife's cheat sheet
-  				<option value="Watir">Watir's cheat sheet
+  				<option value="Dream">DreamInCode cheat sheet
  				<option value="RubyMonk">RubyMonk's online course
  				<option value="RubyDocs">RubyDocs
  				<option value="Rubeque">Rubeque challenges
@@ -30,7 +30,7 @@ function rubyBasics() {
     switch(document.getElementById("rubyBasics").value) {
     	case "ZenSpider": link = "http://www.zenspider.com/Languages/Ruby/QuickRef.html"; break;
     	case "Digilife": link = "http://www.digilife.be/quickreferences/qrc/ruby%20language%20quickref.pdf"; break;
-    	case "Watir": link = "https://github.com/watir/watir/wiki/Cheat-Sheet-for-Ruby"; break;
+    	case "Dream": link = "http://www.dreamincode.net/forums/topic/255958-basics-of-ruby-cheatsheet/"; break;
     	case "RubyMonk": link = "https://rubymonk.com/"; break;
     	case "RubyDocs": link = "http://ruby-doc.org/core-2.2.3/"; break;
     	case "Rubeque": link = "http://www.rubeque.com/"; break;
@@ -40,7 +40,7 @@ function rubyBasics() {
 </script>
 
 	<section>
-		<h2>Ruby Enumerables</h2>
+		<h3>Ruby Enumerables</h3>
 			<select id="rubyEnumerables" onchange="rubyEnumerables()">
   				<option value="">Pick one
   				<option value="Grayson">David Grayson
@@ -68,15 +68,15 @@ function rubyEnumerables() {
 </script>
 
 	<section>
-		<h2>Ruby Core Classes</h2>
+		<h3>Ruby Core Classes</h3>
 			<select id="rubyClasses" onchange="rubyClasses()">
   				<option value="">Pick one
-  				<option value="ZenSpider">ZenSpider's cheat sheet
-  				<option value="Digilife">Digilife's cheat sheet
-  				<option value="Watir">Watir's cheat sheet
- 				<option value="RubyMonk">RubyMonk's really totally awesome and long online course
- 				<option value="RubyDocs">RubyDocs
- 				<option value="Rubeque">Rubeque challenges
+  				<option value="overAPI">overAPI's cheat sheet
+  				<option value="SCF String">shortcutFoo strings
+  				<option value="SCF Array">shortcutFoo arrays
+ 				<option value="SCF Hashes">shortcutFoo hashes
+ 				<option value="LaBelle">Jon LaBelle (long)
+ 				<option value="Rubeque">
 			</select>
 	</section>
 
@@ -84,11 +84,11 @@ function rubyEnumerables() {
 function rubyClasses() {
     var link="";
     switch(document.getElementById("rubyClasses").value) {
-    	case "Grayson": link = "http://www.davidegrayson.com/ruby/enumerable/enumerable_methods.pdf"; break;
-    	case "Sublett": link = "http://daniellesublett.github.io/unit3_cheatsheet.html"; break;
-    	case "Hexy": link = "http://hexysjoyceyfruit.com/index.php/ruby-enumerable-cheat-sheet"; break;
-    	case "RubyDocs": link = "http://ruby-doc.org/core-2.2.3/Enumerable.html"; break;
-    	case "SitePoint": link = "http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"; break;
+    	case "overAPI": link = "http://overapi.com/ruby/"; break;
+    	case "SCF String": link = "https://www.shortcutfoo.com/app/dojos/ruby-strings/cheatsheet"; break;
+    	case "SCF Array": link = "https://www.shortcutfoo.com/app/dojos/ruby-arrays/cheatsheet"; break;
+    	case "SCF Hashes": link = "https://www.shortcutfoo.com/app/dojos/ruby-hashes/cheatsheet"; break;
+    	case "LaBelle": link = "https://jonlabelle.com/snippets/view/ruby/ruby-cheat-sheet"; break;
     	case "APIdock": link = "http://apidock.com/ruby/Enumerable"; break;
      }
      document.getElementById("Inset").src= link;
@@ -96,15 +96,15 @@ function rubyClasses() {
 </script>
 
 		<section>
-		<h2>JS Objects</h2>
+		<h3>JS Objects</h3>
 			<select id="jsObjects" onchange="jsObjects()">
   				<option value="">Pick one
-  				<option value="ZenSpider">ZenSpider's cheat sheet
-  				<option value="Digilife">Digilife's cheat sheet
-  				<option value="Watir">Watir's cheat sheet
- 				<option value="RubyMonk">RubyMonk's online course
- 				<option value="RubyDocs">RubyDocs
- 				<option value="Rubeque">Rubeque challenges
+  				<option value="cklanac">chlanac's cheat sheet
+  				<option value="Child">Dave Child's cheat sheet
+  				<option value="Competa">Competa's cheat sheet
+ 				<option value="Explain That">Explain That!
+ 				<option value="blueblots">Compiled JS cheat sheets
+ 				<option value="Dummies">JS for Dummies. Really.
 			</select>
 	</section>
 
@@ -112,27 +112,27 @@ function rubyClasses() {
 function jsObjects() {
     var link="";
     switch(document.getElementById("jsObjects").value) {
-    	case "Grayson": link = "http://www.davidegrayson.com/ruby/enumerable/enumerable_methods.pdf"; break;
-    	case "Sublett": link = "http://daniellesublett.github.io/unit3_cheatsheet.html"; break;
-    	case "Hexy": link = "http://hexysjoyceyfruit.com/index.php/ruby-enumerable-cheat-sheet"; break;
-    	case "RubyDocs": link = "http://ruby-doc.org/core-2.2.3/Enumerable.html"; break;
-    	case "SitePoint": link = "http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"; break;
-    	case "APIdock": link = "http://apidock.com/ruby/Enumerable"; break;
+    	case "cklanac": link = "https://gist.github.com/cklanac/1433963"; break;
+    	case "Child": link = "http://www.cheatography.com/davechild/cheat-sheets/javascript/"; break;
+    	case "Competa": link = "http://www.competa.com/blog/2014/12/an-object-oriented-javascript-cheat-sheet-for-people-who-are-new-to-the-language/"; break;
+    	case "Explain That": link = "http://www.cheat-sheets.org/saved-copy/jsquick.pdf"; break;
+    	case "blueblots": link = "http://blueblots.com/development/ajax-and-javascript-cheat-sheets/"; break;
+    	case "Dummies": link = "http://www.dummies.com/how-to/content/javascript-for-dummies-cheat-sheet.html"; break;
      }
      document.getElementById("Inset").src= link;
 }
 </script>
 
 	<section>
-		<h2>JS Prototypes</h2>
+		<h3>JS Prototypes</h3>
 			<select id="jsPrototypes" onchange="jsPrototypes()">
   				<option value="">Pick one
-  				<option value="ZenSpider">ZenSpider's cheat sheet
-  				<option value="Digilife">Digilife's cheat sheet
-  				<option value="Watir">Watir's cheat sheet
- 				<option value="RubyMonk">RubyMonk's online course
- 				<option value="RubyDocs">RubyDocs
- 				<option value="Rubeque">Rubeque challenges
+  				<option value="Ford">Geoff Ford's cheat sheet
+  				<option value="JSnook">Jonathan Snook's cheat sheet
+  				<option value="dense">Most dense cheat sheet ever
+ 				<option value="Perfection">Perfection Kills
+ 				<option value="RubyDocs">
+ 				<option value="Rubeque">
 			</select>
 	</section>
 
@@ -140,10 +140,10 @@ function jsObjects() {
 function jsPrototypes() {
     var link="";
     switch(document.getElementById("jsPrototypes").value) {
-    	case "Grayson": link = "http://www.davidegrayson.com/ruby/enumerable/enumerable_methods.pdf"; break;
-    	case "Sublett": link = "http://daniellesublett.github.io/unit3_cheatsheet.html"; break;
-    	case "Hexy": link = "http://hexysjoyceyfruit.com/index.php/ruby-enumerable-cheat-sheet"; break;
-    	case "RubyDocs": link = "http://ruby-doc.org/core-2.2.3/Enumerable.html"; break;
+    	case "Ford": link = "http://geoffford.co.uk/blog/object-oriented-javascript-cheat-sheet"; break;
+    	case "JSnook": link = "http://snook.ca/archives/javascript/prototype_1_5_0_cheatsheet/"; break;
+    	case "dense": link = "https://courses.cs.washington.edu/courses/cse154/13sp/cheat-sheets/prototype-cheat-sheet-1.6.pdf"; break;
+    	case "Perfection": link = "http://perfectionkills.com/prototype-1602-cheat-sheet/"; break;
     	case "SitePoint": link = "http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"; break;
     	case "APIdock": link = "http://apidock.com/ruby/Enumerable"; break;
      }
@@ -152,15 +152,15 @@ function jsPrototypes() {
 </script>
 
 	<section>
-		<h2>Looping:JSvRuby</h2>
+		<h3>Looping:JSvRuby</h3>
 			<select id="loopingComps" onchange="loopingComps()">
   				<option value="">Pick one
-  				<option value="ZenSpider">ZenSpider's cheat sheet
-  				<option value="Digilife">Digilife's cheat sheet
-  				<option value="Watir">Watir's cheat sheet
- 				<option value="RubyMonk">RubyMonk's online course
- 				<option value="RubyDocs">RubyDocs
- 				<option value="Rubeque">Rubeque challenges
+  				<option value="luminous14">luminous14's cheat sheet
+  				<option value="Jessie">Jessie/Sarah's cheat sheet
+  				<option value="Tim">Tim /& Marshall's cheat sheet
+ 				<option value="lcmbl">lcmbl's cheat sheet
+ 				<option value="RubyDocs">
+ 				<option value="Rubeque">
 			</select>
 	</section>
 
@@ -168,10 +168,10 @@ function jsPrototypes() {
 function loopingComps() {
     var link="";
     switch(document.getElementById("loopingComps").value) {
-    	case "Grayson": link = "http://www.davidegrayson.com/ruby/enumerable/enumerable_methods.pdf"; break;
-    	case "Sublett": link = "http://daniellesublett.github.io/unit3_cheatsheet.html"; break;
-    	case "Hexy": link = "http://hexysjoyceyfruit.com/index.php/ruby-enumerable-cheat-sheet"; break;
-    	case "RubyDocs": link = "http://ruby-doc.org/core-2.2.3/Enumerable.html"; break;
+    	case "luminous14": link = "https://luminous14.github.io/projects/unit3_cheatsheet.html"; break;
+    	case "Jessie": link = "http://jessiewuwu.github.io/blog/cheatsheet.html"; break;
+    	case "Tim": link = "http://timcannady.github.io/cheat-sheet.html"; break;
+    	case "lcmbl": link = "http://lcmbl.github.io/blog/cheat-sheet.html"; break;
     	case "SitePoint": link = "http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"; break;
     	case "APIdock": link = "http://apidock.com/ruby/Enumerable"; break;
      }
@@ -180,15 +180,15 @@ function loopingComps() {
 </script>
 
 	<section>
-		<h2>HTML5</h2>
+		<h3>HTML5</h3>
 			<select id="html5Stuff" onchange="html5Stuff()">
   				<option value="">Pick one
-  				<option value="ZenSpider">ZenSpider's cheat sheet
-  				<option value="Digilife">Digilife's cheat sheet
-  				<option value="Watir">Watir's cheat sheet
- 				<option value="RubyMonk">RubyMonk's online course
- 				<option value="RubyDocs">RubyDocs
- 				<option value="Rubeque">Rubeque challenges
+  				<option value="websitesetup">Robert Mening's cheat sheet
+  				<option value="Smashing">Smashing Magazine's cheat sheet
+  				<option value="Mega">Mega HTML5 cheat sheet
+ 				<option value="24Hours">HTML5 in 24 Hours
+ 				<option value="RubyDocs">
+ 				<option value="Rubeque">
 			</select>
 	</section>
 
@@ -196,10 +196,10 @@ function loopingComps() {
 function html5Stuff() {
     var link="";
     switch(document.getElementById("html5Stuff").value) {
-    	case "Grayson": link = "http://www.davidegrayson.com/ruby/enumerable/enumerable_methods.pdf"; break;
-    	case "Sublett": link = "http://daniellesublett.github.io/unit3_cheatsheet.html"; break;
-    	case "Hexy": link = "http://hexysjoyceyfruit.com/index.php/ruby-enumerable-cheat-sheet"; break;
-    	case "RubyDocs": link = "http://ruby-doc.org/core-2.2.3/Enumerable.html"; break;
+    	case "websitesetup": link = "http://websitesetup.org/html5-cheat-sheet/"; break;
+    	case "Smashing": link = "https://media-mediatemple.netdna-ssl.com/wp-content/uploads/images/html5-cheat-sheet/html5-cheat-sheet.pdf"; break;
+    	case "Mega": link = "http://makeawebsitehub.com/wp-content/uploads/2015/06/HTML5-Mega-Cheat-Sheet-A4-Print-ready.pdf"; break;
+    	case "24Hours": link = "http://www.html5in24hours.com/html5-cheat-sheet.pdf"; break;
     	case "SitePoint": link = "http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"; break;
     	case "APIdock": link = "http://apidock.com/ruby/Enumerable"; break;
      }
@@ -208,15 +208,15 @@ function html5Stuff() {
 </script>
 
 	<section>
-		<h2>CSS</h2>
+		<h3>CSS</h3>
 			<select id="cssStuff" onchange="cssStuff()">
   				<option value="">Pick one
-  				<option value="ZenSpider">ZenSpider's cheat sheet
-  				<option value="Digilife">Digilife's cheat sheet
-  				<option value="Watir">Watir's cheat sheet
- 				<option value="RubyMonk">RubyMonk's online course
- 				<option value="RubyDocs">RubyDocs
- 				<option value="Rubeque">Rubeque challenges
+  				<option value="Smashing">Smashing Magazine's cheat sheet
+  				<option value="Franke">Leslie Franke's cheat sheet
+  				<option value="OverAPI">OverAPI's cheat sheet
+ 				<option value="compendium">Compendium of cheat sheets
+ 				<option value="W3">W3-reference, but readable
+ 				<option value="Naomi">Naomigraphics
 			</select>
 	</section>
 
@@ -224,27 +224,27 @@ function html5Stuff() {
 function cssStuff() {
     var link="";
     switch(document.getElementById("cssStuff").value) {
-    	case "Grayson": link = "http://www.davidegrayson.com/ruby/enumerable/enumerable_methods.pdf"; break;
-    	case "Sublett": link = "http://daniellesublett.github.io/unit3_cheatsheet.html"; break;
-    	case "Hexy": link = "http://hexysjoyceyfruit.com/index.php/ruby-enumerable-cheat-sheet"; break;
-    	case "RubyDocs": link = "http://ruby-doc.org/core-2.2.3/Enumerable.html"; break;
-    	case "SitePoint": link = "http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"; break;
-    	case "APIdock": link = "http://apidock.com/ruby/Enumerable"; break;
+    	case "Smashing": link = "https://media-mediatemple.netdna-ssl.com/wp-content/uploads/images/css3-cheat-sheet/css3-cheat-sheet.pdf"; break;
+    	case "Franke": link = "http://www.lesliefranke.com/files/reference/csscheatsheet.html"; break;
+    	case "OverAPI": link = "http://overapi.com/css/"; break;
+    	case "compendium": link = "http://www.1stwebdesigner.com/css-cheat-sheets-designers/"; break;
+    	case "W3": link = "http://www.w3schools.com/cssref/"; break;
+    	case "Naomi": link = "http://www.naomigraphics.com/dreamweaver/css-cheat-sheet.pdf"; break;
      }
      document.getElementById("Inset").src= link;
 }
 </script>
 
 	<section>
-		<h2>CSS Positioning</h2>
+		<h3>CSS Positioning</h3>
 			<select id="cssPositioning" onchange="cssPositioning()">
   				<option value="">Pick one
-  				<option value="ZenSpider">ZenSpider's cheat sheet
-  				<option value="Digilife">Digilife's cheat sheet
-  				<option value="Watir">Watir's cheat sheet
- 				<option value="RubyMonk">RubyMonk's online course
- 				<option value="RubyDocs">RubyDocs
- 				<option value="Rubeque">Rubeque challenges
+  				<option value="thewc">thewc--simple, beautiful
+  				<option value="syntaxxx">syntaxxx's cheat sheet
+  				<option value="About">About.com's cheat sheet
+ 				<option value="CSS-Tricks">CSS-Tricks
+ 				<option value="Muspratt">Muspratt
+ 				<option value="Rubeque">
 			</select>
 	</section>
 
@@ -252,11 +252,11 @@ function cssStuff() {
 function cssPositioning() {
     var link="";
     switch(document.getElementById("cssPositioning").value) {
-    	case "Grayson": link = "http://www.davidegrayson.com/ruby/enumerable/enumerable_methods.pdf"; break;
-    	case "Sublett": link = "http://daniellesublett.github.io/unit3_cheatsheet.html"; break;
-    	case "Hexy": link = "http://hexysjoyceyfruit.com/index.php/ruby-enumerable-cheat-sheet"; break;
-    	case "RubyDocs": link = "http://ruby-doc.org/core-2.2.3/Enumerable.html"; break;
-    	case "SitePoint": link = "http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"; break;
+    	case "thewc": link = "http://thewc.co/storage/goodies/codagogy_css_positioning_cheat_sheet.pdf"; break;
+      case "syntaxxx": link = "http://syntaxxx.com/css-cheat-sheet/"; break;
+      case "About": link = "http://webdesign.about.com/od/css/l/css_layout_cheat_sheet.pdf"; break;
+      case "CSS-Tricks": link = "https://css-tricks.com/snippets/css/a-guide-to-flexbox/"; break;
+    	case "Muspratt": link = "http://web3.jamesmuspratt.com/blog/cheat-sheet-css-positioning"; break;
     	case "APIdock": link = "http://apidock.com/ruby/Enumerable"; break;
      }
      document.getElementById("Inset").src= link;
@@ -264,15 +264,15 @@ function cssPositioning() {
 </script>
 
 	<section>
-		<h2>GIT</h2>
+		<h3>GIT</h3>
 			<select id="gitStuff" onchange="gitStuff()">
   				<option value="">Pick one
-  				<option value="ZenSpider">ZenSpider's cheat sheet
-  				<option value="Digilife">Digilife's cheat sheet
-  				<option value="Watir">Watir's cheat sheet
- 				<option value="RubyMonk">RubyMonk's online course
- 				<option value="RubyDocs">RubyDocs
- 				<option value="Rubeque">Rubeque challenges
+  				<option value="git-tower">git-tower's cheat sheet
+  				<option value="GitHub">GitHub's official cheat sheet
+  				<option value="ndp">ndp's cheat sheet
+ 				<option value="errtheblog">errtheblog--not a 1 pager
+ 				<option value="scotch">scotch--I don't know why
+ 				<option value="dudler">A simple one-pager
 			</select>
 	</section>
 
@@ -280,19 +280,19 @@ function cssPositioning() {
 function gitStuff() {
     var link="";
     switch(document.getElementById("gitStuff").value) {
-    	case "Grayson": link = "http://www.davidegrayson.com/ruby/enumerable/enumerable_methods.pdf"; break;
-    	case "Sublett": link = "http://daniellesublett.github.io/unit3_cheatsheet.html"; break;
-    	case "Hexy": link = "http://hexysjoyceyfruit.com/index.php/ruby-enumerable-cheat-sheet"; break;
-    	case "RubyDocs": link = "http://ruby-doc.org/core-2.2.3/Enumerable.html"; break;
-    	case "SitePoint": link = "http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"; break;
-    	case "APIdock": link = "http://apidock.com/ruby/Enumerable"; break;
+    	case "git-tower": link = "http://www.git-tower.com/blog/git-cheat-sheet/"; break;
+    	case "GitHub": link = "https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf"; break;
+    	case "ndp": link = "http://ndpsoftware.com/git-cheatsheet.html#loc=workspace;"; break;
+    	case "errtheblog": link = "http://cheat.errtheblog.com/s/git"; break;
+    	case "scotch": link = "https://scotch.io/bar-talk/git-cheat-sheet"; break;
+    	case "dudler": link = "https://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf"; break;
      }
      document.getElementById("Inset").src= link;
 }
 </script>
 
 	<section>
-		<h2>SQL</h2>
+		<h3>SQL</h3>
 			<select id="sqlStuff" onchange="sqlStuff()">
   				<option value="">Pick one
   				<option value="ZenSpider">ZenSpider's cheat sheet
@@ -320,7 +320,7 @@ function sqlStuff() {
 </script>
 
 	<section>
-		<h2>Markdown</h2>
+		<h3>Markdown</h3>
 			<select id="markDown" onchange="markDown()">
   				<option value="">Pick one
   				<option value="ZenSpider">ZenSpider's cheat sheet
@@ -348,12 +348,12 @@ function markDown() {
 </script>
 
 	<section>
-		<h2>Miscellany</h2>
+		<h3>Miscellany</h3>
 			<select id="miscellany" onchange="miscellany()">
   				<option value="">Pick one
   				<option value="Agent Cooper">AgentCooper's JS v Ruby
-  				<option value="Digilife">Digilife's cheat sheet
-  				<option value="Watir">Watir's cheat sheet
+  				<option value="devCHEATs">devCHEATs on everything
+  				<option value="cheetyr">cheetyr on GIT/Markdown/CSS
  				<option value="RubyMonk">RubyMonk's online course
  				<option value="RubyDocs">RubyDocs
  				<option value="Rubeque">Rubeque challenges
@@ -365,8 +365,8 @@ function miscellany() {
     var link="";
     switch(document.getElementById("miscellany").value) {
     	case "Agent Cooper": link = "http://agentcooper.io/js-ruby-comparison/"; break;
-    	case "Sublett": link = "http://daniellesublett.github.io/unit3_cheatsheet.html"; break;
-    	case "Hexy": link = "http://hexysjoyceyfruit.com/index.php/ruby-enumerable-cheat-sheet"; break;
+    	case "devCHEATs": link = "http://www.devcheats.com/"; break;
+    	case "cheetyr": link = "http://www.cheetyr.com/"; break;
     	case "RubyDocs": link = "http://ruby-doc.org/core-2.2.3/Enumerable.html"; break;
     	case "SitePoint": link = "http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"; break;
     	case "APIdock": link = "http://apidock.com/ruby/Enumerable"; break;
@@ -376,7 +376,7 @@ function miscellany() {
 </script>
 
 	<section>
-		<h2>Fun Stuff</h2>
+		<h3>Fun Stuff</h3>
 			<select id="funStuff" onchange="funStuff()">
   				<option value="">Pick one
   				<option value="XKCD">XKCD
